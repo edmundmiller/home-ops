@@ -16,22 +16,6 @@ spec:
         name: node-feature-discovery-charts
         namespace: flux-system
   values:
-    master:
-      tolerations:
-        - key: "node-role.kubernetes.io/master"
-          operator: "Equal"
-          value: "true"
-          effect: "NoSchedule"
-      affinity:
-        nodeAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - weight: 1
-              preference:
-                matchExpressions:
-                  - key: "node-role.kubernetes.io/master"
-                    operator: In
-                    values: [""]
-    worker:
       config: |-
         core:
           sources:
