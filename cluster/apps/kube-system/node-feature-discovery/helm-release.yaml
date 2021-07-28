@@ -16,6 +16,28 @@ spec:
         name: node-feature-discovery-charts
         namespace: flux-system
   values:
+    image:
+      repository: k8s.gcr.io/nfd/node-feature-discovery
+      tag: 'v0.8.2'
+
+    master:
+      tolerations:
+        - effect: 'NoExecute'
+          operator: 'Exists'
+        - effect: 'NoSchedule'
+          operator: 'Exists'
+
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 1
+              preference:
+                matchExpressions:
+                  - key: 'node-role.kubernetes.io/master'
+                    operator: In
+                    values: ['']
+
+    worker:
       config: |-
         core:
           sources:
@@ -27,7 +49,7 @@ spec:
             deviceClassWhitelist:
             - "02"
             - "03"
-            - "0e"
+            - "0a"
             - "ef"
             - "fe"
             - "ff"
@@ -36,37 +58,32 @@ spec:
             - "vendor"
             - "device"
           custom:
-          - name: "zwave"
-            matchOn:
-            - usbId:
-                class: ["02"]
-                vendor: ["0658"]
-                device: ["0200"]
-          - name: "intel-gpu"
-            matchOn:
-            - pciId:
-                class: ["0300"]
-                vendor: ["8086"]
-          - name: "coral-tpu"
-            matchOn:
-            - usbId:
-                vendor: ["1a6e", "18d1"]
-          - name: "flight-aware"
-            matchOn:
-            - usbId:
-                class: ["ff"]
-                vendor: ["0bda"]
-                device: ["2832"]
-          - name: "zigbee"
-            matchOn:
-            - usbId:
-                class: ["ff"]
-                vendor: ["1a86"]
-                device: ["7523"]
+            - name: "intel-gpu"
+              matchOn:
+              - pciId:
+                  class: ["0300"]
+                  vendor: ["8086"]
+            - name: "coral-tpu"
+              matchOn:
+              - usbId:
+                  vendor: ["1a6e", "18d1"]
+            - name: "ender3"
+              matchOn:
+              - usbId:
+                  class: ["ff"]
+                  vendor: ["1a86"]
+                  device: ["7523"]
+            - name: "aukey_webcam"
+              matchOn:
+              - usbId:
+                  class: ["ef"]
+                  vendor: ["0c45"]
+                  device: ["636d"]
       annotations:
-        configmap.reloader.stakater.com/reload: "nfd-worker-conf"
+        configmap.reloader.stakater.com/reload: 'nfd-worker-conf'
+
       tolerations:
-        - effect: "NoExecute"
-          operator: "Exists"
-        - effect: "NoSchedule"
-          operator: "Exists"
+        - effect: 'NoExecute'
+          operator: 'Exists'
+        - effect: 'NoSchedule'
+          operator: 'Exists'
