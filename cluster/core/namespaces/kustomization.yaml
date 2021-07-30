@@ -7,3 +7,4 @@ resources:
 - media.yaml
 - metallb-system.yaml
 - networking.yaml
+- vpn.yaml
