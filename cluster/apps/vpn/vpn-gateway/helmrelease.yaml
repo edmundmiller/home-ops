@@ -22,5 +22,4 @@ spec:
       tag: v1.3.1
 
     routed_namespaces:
-    - downloads
-
+    - vpn
