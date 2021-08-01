@@ -21,18 +21,17 @@ spec:
       repository: ghcr.io/k8s-at-home/qbittorrent
       tag: v4.3.5
     env:
-      TZ: "America/Chicago"
-      UMASK: "022"
+      TZ: 'America/Chicago'
+      UMASK: '022'
 
     hostname: qbittorrent
 
     podAnnotations:
-      setGateway: "true"
+      setGateway: 'true'
 
     podSecurityContext:
       supplementalGroups:
-      - 65539
-
+        - 65539
 
     service:
       main:
@@ -43,7 +42,7 @@ spec:
         enabled: true
         type: LoadBalancer
         externalIPs:
-          - "${SVC_QBITTORRENT_ADDRESS}"
+          - '${SVC_QBITTORRENT_ADDRESS}'
         ports:
           bittorrent:
             enabled: true
@@ -55,18 +54,16 @@ spec:
       main:
         enabled: true
         annotations:
-          kubernetes.io/ingress.class: "nginx"
+          kubernetes.io/ingress.class: 'nginx'
         hosts:
-          - host: "qb.${SECRET_DOMAIN}"
+          - host: 'qb.${SECRET_DOMAIN}'
             paths:
               - path: /
                 pathType: Prefix
         tls:
           - hosts:
-              - "qb.${SECRET_DOMAIN}"
-    podSecurityContext:
-      supplementalGroups:
-        - 100
+              - 'qb.${SECRET_DOMAIN}'
+
     persistence:
       config:
         enabled: true
