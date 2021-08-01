@@ -22,8 +22,84 @@ spec:
       tag: v1.3.1
 
     routed_namespaces:
-      - vpn
+      - downloads
+
+    publicPorts:
+      - hostname: qbittorrent #hostname assigned to the pod
+        IP: 10 # must be an integer between 2 and VXLAN_GATEWAY_FIRST_DYNAMIC_IP (20 by default)
+        ports:
+          - type: udp
+            port: 18289
+          - type: tcp
+            port: 18289
 
     settings:
-      NOT_ROUTED_TO_GATEWAY_CIDRS: "10.0.0.0/8 192.168.1.0/16"
-      VPN_LOCAL_CIDRS: "10.0.0.0/8 192.168.1.0/16"
+      NOT_ROUTED_TO_GATEWAY_CIDRS: '10.0.0.0/8 192.168.1.0/16'
+      VPN_INTERFACE: wg0
+      VPN_BLOCK_OTHER_TRAFFIC: true
+      VPN_TRAFFIC_PORT: 443
+      VPN_LOCAL_CIDRS: '10.0.0.0/8 192.168.1.0/16'
+
+    webhook:
+      image:
+        repository: ghcr.io/k8s-at-home/gateway-admision-controller
+        tag: v3.3.2
+
+      gatewayDefault: false
+      gatewayLabel: setGateway
+      gatewayAnnotation: setGateway
+
+    livenessProbe:
+      exec:
+        command:
+          - sh
+          - -c
+          - if [ $(wget -q -O- https://ipinfo.io/country) == 'US' ]; then exit 0; else exit $?; fi
+      initialDelaySeconds: 30
+      periodSeconds: 60
+      failureThreshold: 1
+
+    addons:
+      vpn:
+        enabled: true
+        type: wireguard
+
+        wireguard:
+          image:
+            repository: ghcr.io/k8s-at-home/wireguard
+            tag: v1.0.20210424
+            pullPolicy: IfNotPresent
+
+        securityContext:
+          runAsUser: 568
+          runAsGroup: 568
+
+        env:
+          TZ: 'America/Chicago'
+          IPTABLES_BACKEND: nft
+          KILLSWITCH: 'false'
+
+        configFileSecret: vpn-gateway-vpnconfig
+
+        resources:
+          requests:
+            cpu: '0.001'
+            memory: 128Mi
+          limits:
+            memory: 512Mi
+
+        networkPolicy:
+          enabled: true
+
+          egress:
+            - to:
+                - ipBlock:
+                    cidr: 0.0.0.0/0
+              ports:
+                # VPN traffic port - change if your provider uses a different port
+                - port: 443
+                  protocol: UDP
+            - to:
+                # Allow traffic within K8S - change if your K8S cluster uses a different CIDR
+                - ipBlock:
+                    cidr: 10.0.0.0/8
