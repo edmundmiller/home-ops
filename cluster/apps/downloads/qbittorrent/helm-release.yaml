@@ -45,6 +45,7 @@ spec:
     podSecurityContext:
       supplementalGroups:
         - 1
+      fsGroupChangePolicy: "OnRootMismatch"
 
     persistence:
       config:
