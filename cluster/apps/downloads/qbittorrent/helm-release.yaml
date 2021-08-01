@@ -45,12 +45,18 @@ spec:
     podSecurityContext:
       supplementalGroups:
         - 1
-      fsGroupChangePolicy: "OnRootMismatch"
+      fsGroupChangePolicy: 'OnRootMismatch'
 
     persistence:
       config:
         enabled: true
-        existingClaim: qbittorrent-config-v1
+        type: custom
+        accessMode: ReadWriteMany
+        volumeSpec:
+          nfs:
+            server: 192.168.1.101
+            path: /srv/nfs/configs
+
       media:
         enabled: true
         type: custom
