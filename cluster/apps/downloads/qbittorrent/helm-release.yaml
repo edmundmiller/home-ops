@@ -42,6 +42,10 @@ spec:
           - hosts:
               - 'qb.${SECRET_DOMAIN}'
 
+    podSecurityContext:
+      supplementalGroups:
+        - 1
+
     persistence:
       config:
         enabled: true
