@@ -76,7 +76,7 @@ spec:
 
         env:
           TZ: 'America/Chicago'
-          IPTABLES_BACKEND: nft
+          IPTABLES_BACKEND: legacy
           KILLSWITCH: 'false'
 
         configFileSecret: vpn-gateway-vpnconfig
