@@ -42,7 +42,7 @@ spec:
         volumeSpec:
           nfs:
             server: 192.168.1.101
-            path: /srv/nfs/video
+            path: /srv/nfs/media
         mountPath: /media
         readOnly: true
       transcode:
