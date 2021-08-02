@@ -6,5 +6,6 @@ resources:
   - jackett
   - lidarr
   - radarr
+  - readarr
   - sonarr
   - prowlarr
