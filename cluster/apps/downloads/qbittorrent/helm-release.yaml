@@ -20,6 +20,7 @@ spec:
     image:
       repository: ghcr.io/k8s-at-home/qbittorrent
       tag: v4.3.5
+
     env:
       TZ: 'America/Chicago'
 
@@ -44,18 +45,7 @@ spec:
 
     podSecurityContext:
       supplementalGroups:
-        - 1
-      fsGroupChangePolicy: 'OnRootMismatch'
-
-    initContainers:
-      - name: update-volume-permission
-        image: busybox
-        command: ['sh', '-c', 'chown -R 568:568 /config']
-        volumeMounts:
-          - name: config
-            mountPath: /config
-        securityContext:
-          runAsUser: 0
+        - 100
 
     persistence:
       config:
