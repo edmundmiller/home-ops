@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - qbittorrent
   - jackett
+  - lidarr
   - radarr
   - sonarr
   - prowlarr
