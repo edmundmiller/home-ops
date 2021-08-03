@@ -87,3 +87,17 @@ spec:
             memory: 128Mi
           limits:
             memory: 512Mi
+
+        networkPolicy:
+          enabled: true
+
+          egress:
+            - to:
+                - ipBlock:
+                    cidr: 0.0.0.0/0
+              ports:
+                - port: 443
+                  protocol: UDP
+            - to:
+                - ipBlock:
+                    cidr: 10.0.0.0/8
