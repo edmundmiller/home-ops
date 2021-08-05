@@ -1,0 +1,100 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: teedy
+  namespace: default
+spec:
+  interval: 5m
+  releaseName: teedy
+  chart:
+    spec:
+      # renovate: registryUrl=https://k8s-at-home.com/charts/
+      chart: teedy
+      version: 4.1.1
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-at-home-charts
+        namespace: flux-system
+      interval: 5m
+  values:
+    image:
+      repository: sismics/docs
+      tag: v1.9
+    env:
+      TZ: "America/Chicago"
+      DOCS_DEFAULT_LANGUAGE: eng
+      DOCS_BASE_URL: "https://teedy.${SECRET_DOMAIN}"
+      DOCS_ADMIN_EMAIL_INIT: ${SECRET_CLOUDFLARE_EMAIL}
+      DATABASE_URL: "jdbc:postgresql://teedy-postgresql:5432/teedydb"
+      DATABASE_USER: "teedyuser"
+      # DOCS_SMTP_HOSTNAME: "smtp.${SECRET_DOMAIN}"
+      # DOCS_SMTP_PORT: 25
+    ingress:
+      main:
+        enabled: true
+        annotations:
+          kubernetes.io/ingress.class: "nginx"
+        hosts:
+          - host: "teedy.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - "teedy.${SECRET_DOMAIN}"
+    persistence:
+      data:
+        enabled: true
+        existingClaim: teedy-config-v1
+      media:
+        enabled: true
+        type: custom
+        volumeSpec:
+          nfs:
+            server: 192.168.1.101
+            path: /srv/nfs/docs
+        mountPath: /media
+        readOnly: true
+    postgresql:
+      enabled: true
+      persistence:
+        enabled: true
+        # FIXME
+        storageClass: local-path
+    # additionalContainers:
+    # - name: docs-importer
+    #   image: sismics/docs-importer:latest
+    #   imagePullPolicy: Always
+    #   env:
+    #   - name: TEEDY_TAG
+    #     value: "9fdc3144-7fdf-46a9-819e-363ef2f4032f"
+    #   - name: TEEDY_ADDTAGS
+    #     value: "false"
+    #   - name: TEEDY_LANG
+    #     value: "eng"
+    #   - name: TEEDY_URL
+    #     value: "http://teedy:8080"
+    #   - name: TEEDY_USERNAME
+    #     value: "importer"
+    #   - name: TEEDY_PASSWORD
+    #     value: "importerpass"
+    #   volumeMounts:
+    #   - mountPath: /import
+    #     name: media
+    #     subPath: scans/import
+
+    # podSecurityContext:
+    #   runAsUser: 1000
+    #   runAsGroup: 1000
+    #   fsGroup: 1000
+    # resources:
+    #   requests:
+    #     memory: 350Mi
+    #     cpu: 500m
+    #   limits:
+    #     memory: 1500Mi
+  # TODO
+  # valuesFrom:
+  # - kind: Secret
+  #   name: "teedy-helm-values"
