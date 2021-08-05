@@ -29,15 +29,15 @@ spec:
         IP: 10 # must be an integer between 2 and VXLAN_GATEWAY_FIRST_DYNAMIC_IP (20 by default)
         ports:
           - type: udp
-            port: 18289
+            port: ${VPN_FORWARDED_PORT_1}
           - type: tcp
-            port: 18289
+            port: ${VPN_FORWARDED_PORT_1}
 
     settings:
       NOT_ROUTED_TO_GATEWAY_CIDRS: '10.0.0.0/8 192.168.1.0/16'
       VPN_INTERFACE: wg0
       VPN_BLOCK_OTHER_TRAFFIC: true
-      VPN_TRAFFIC_PORT: 443
+      VPN_TRAFFIC_PORT: ${VPN_GATEWAY_VPN_PORT}
       VPN_LOCAL_CIDRS: '10.0.0.0/8 192.168.1.0/16'
 
     webhook:
@@ -96,7 +96,7 @@ spec:
                 - ipBlock:
                     cidr: 0.0.0.0/0
               ports:
-                - port: 443
+                - port: ${VPN_GATEWAY_VPN_PORT}
                   protocol: UDP
             - to:
                 - ipBlock:

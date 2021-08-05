@@ -42,9 +42,9 @@ spec:
         ports:
           bittorrent:
             enabled: true
-            port: 50413
+            port: ${VPN_FORWARDED_PORT_1}
             protocol: TCP
-            targetPort: 50413
+            targetPort: ${VPN_FORWARDED_PORT_1}
         externalTrafficPolicy: Local
 
     ingress:
