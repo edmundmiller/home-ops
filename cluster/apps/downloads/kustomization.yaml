@@ -10,5 +10,3 @@ resources:
   - readarr
   - sonarr
   - prowlarr
-
-  - networkPolicy.yaml
