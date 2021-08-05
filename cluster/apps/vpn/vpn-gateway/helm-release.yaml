@@ -34,11 +34,11 @@ spec:
             port: ${VPN_FORWARDED_PORT_1}
 
     settings:
-      NOT_ROUTED_TO_GATEWAY_CIDRS: '10.0.0.0/8 192.168.1.0/16'
+      NOT_ROUTED_TO_GATEWAY_CIDRS: "${NETWORK_K8S_CLUSTER_CIDR} ${NETWORK_K8S_SERVICE_CIDR} ${NETWORK_MANAGEMENT_CIDR}"
       VPN_INTERFACE: wg0
       VPN_BLOCK_OTHER_TRAFFIC: true
       VPN_TRAFFIC_PORT: ${VPN_GATEWAY_VPN_PORT}
-      VPN_LOCAL_CIDRS: '10.0.0.0/8 192.168.1.0/16'
+      VPN_LOCAL_CIDRS: "${NETWORK_K8S_CLUSTER_CIDR} ${NETWORK_K8S_SERVICE_CIDR} ${NETWORK_MANAGEMENT_CIDR}"
 
     webhook:
       image:
@@ -100,4 +100,6 @@ spec:
                   protocol: UDP
             - to:
                 - ipBlock:
-                    cidr: 10.0.0.0/8
+                    cidr: ${NETWORK_K8S_CLUSTER_CIDR}
+                - ipBlock:
+                    cidr: ${NETWORK_K8S_SERVICE_CIDR}
