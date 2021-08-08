@@ -17,6 +17,8 @@ spec:
         namespace: flux-system
   values:
     operatorNamespace: rook-ceph
+    toolbox:
+      enabled: true
     # TODO
     # resources:
     #   requests:
