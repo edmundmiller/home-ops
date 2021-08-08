@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
   - cluster-helm-release.yaml
   - helm-release.yaml
+  - toolbox.yaml
