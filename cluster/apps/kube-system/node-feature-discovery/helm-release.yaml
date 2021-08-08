@@ -33,7 +33,8 @@ spec:
                 matchExpressions:
                   - key: 'node-role.kubernetes.io/master'
                     operator: In
-                    values: ['']
+                    values:
+                      - 'true'
     worker:
       config: |-
         core:
