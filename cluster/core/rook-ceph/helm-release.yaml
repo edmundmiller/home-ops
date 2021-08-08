@@ -18,8 +18,10 @@ spec:
   values:
     # crds:
     #   enabled: false
-    # csi:
-    #   kubeletDirPath: /var/lib/kubelet
+    # https://nixos.wiki/wiki/Kubernetes#Rook_Ceph_storage_cluster
+    csi:
+      forceCephFSKernelClient: false
+      kubeletDirPath: /var/lib/kubelet
     #   pluginTolerations:
     #   - operator: "Exists"
     resources:
