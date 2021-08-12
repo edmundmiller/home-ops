@@ -16,11 +16,12 @@ spec:
         name: rook-ceph-charts
         namespace: flux-system
   values:
-    # crds:
-    #   enabled: false
-    # https://nixos.wiki/wiki/Kubernetes#Rook_Ceph_storage_cluster
-    #   pluginTolerations:
-    #   - operator: "Exists"
+    crds:
+      enabled: false
+    csi:
+      kubeletDirPath: /var/lib/kubelet
+      pluginTolerations:
+      - operator: "Exists"
     resources:
       requests:
         cpu: 100m
