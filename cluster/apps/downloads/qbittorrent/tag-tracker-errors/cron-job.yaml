@@ -2,7 +2,7 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  namespace: media
+  namespace: downloads
   name: tag-tracker-errors
 spec:
   schedule: "0 * * * *"
