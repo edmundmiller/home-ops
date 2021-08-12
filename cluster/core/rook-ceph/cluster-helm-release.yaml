@@ -19,6 +19,9 @@ spec:
     operatorNamespace: rook-ceph
     toolbox:
       enabled: true
+    cephClusterSpec:
+      mon:
+        allowMultiplePerNode: true
     # TODO
     # resources:
     #   requests:
