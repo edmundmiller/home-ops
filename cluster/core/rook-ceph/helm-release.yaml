@@ -19,6 +19,7 @@ spec:
     crds:
       enabled: false
     csi:
+      logLevel: 3
       kubeletDirPath: /var/lib/kubelet
       pluginTolerations:
       - operator: "Exists"
