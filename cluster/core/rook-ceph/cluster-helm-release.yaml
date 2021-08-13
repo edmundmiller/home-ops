@@ -20,8 +20,16 @@ spec:
     toolbox:
       enabled: true
     cephClusterSpec:
-      mon:
-        allowMultiplePerNode: true
+      # mon:
+      #   allowMultiplePerNode: true
+      storage:
+        useAllNodes: false
+        useAllDevices: false
+
+        nodes:
+          - name: 'unas'
+            devices: # specific devices to use for storage can be specified for each node
+              - name: 'zd0'
 
     ingress:
       main:
