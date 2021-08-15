@@ -58,6 +58,8 @@ spec:
         readOnly: true
     postgresql:
       enabled: true
+      volumePermissions:
+        enabled: true
       persistence:
         enabled: true
         # FIXME
