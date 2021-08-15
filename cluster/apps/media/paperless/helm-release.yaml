@@ -33,7 +33,7 @@ spec:
           - hosts:
               - "paperless.${SECRET_DOMAIN}"
     persistence:
-      config:
+      data:
         enabled: true
         existingClaim: paperless-config-v1
       media:
@@ -43,8 +43,6 @@ spec:
           nfs:
             server: 192.168.1.101
             path: /srv/nfs/docs
-        mountPath: /media
-        readOnly: true
     resources:
       requests:
         gpu.intel.com/i915: 1
