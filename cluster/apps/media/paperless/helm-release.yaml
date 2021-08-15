@@ -43,11 +43,3 @@ spec:
           nfs:
             server: 192.168.1.101
             path: /srv/nfs/docs
-    resources:
-      requests:
-        gpu.intel.com/i915: 1
-        cpu: 1000m
-        memory: 1000Mi
-      limits:
-        gpu.intel.com/i915: 1
-        memory: 16000Mi
