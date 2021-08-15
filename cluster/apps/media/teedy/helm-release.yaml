@@ -28,6 +28,7 @@ spec:
       DOCS_ADMIN_EMAIL_INIT: ${SECRET_CLOUDFLARE_EMAIL}
       DATABASE_URL: "jdbc:postgresql://teedy-postgresql:5432/teedydb"
       DATABASE_USER: "teedyuser"
+      DATABASE_PASSWORD: "teedypassword"
       # DOCS_SMTP_HOSTNAME: "smtp.${SECRET_DOMAIN}"
       # DOCS_SMTP_PORT: 25
     ingress:
