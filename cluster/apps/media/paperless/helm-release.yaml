@@ -32,14 +32,16 @@ spec:
         tls:
           - hosts:
               - "paperless.${SECRET_DOMAIN}"
-    # persistence:
-    #   data:
-    #     enabled: true
-    #     existingClaim: paperless-config-v1
-    #   media:
-    #     enabled: true
-    #     type: custom
-    #     volumeSpec:
-    #       nfs:
-    #         server: 192.168.1.101
-    #         path: /srv/nfs/docs
+    persistence:
+      data:
+        enabled: true
+        existingClaim: paperless-config-v1
+        mountPath: /data
+      media:
+        enabled: true
+        type: custom
+        mountPath: /media
+        volumeSpec:
+          nfs:
+            server: 192.168.1.101
+            path: /srv/nfs/docs
