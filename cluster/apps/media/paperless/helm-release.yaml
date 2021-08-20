@@ -19,6 +19,8 @@ spec:
   values:
     env:
       TZ: "America/Chicago"
+      USERMAP_UID: 568
+      USERMAP_GID: 568
     ingress:
       main:
         enabled: true
