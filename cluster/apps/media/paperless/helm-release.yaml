@@ -21,6 +21,7 @@ spec:
       TZ: "America/Chicago"
       USERMAP_UID: 568
       USERMAP_GID: 568
+      PAPERLESS_CONSUMER_POLLING: 300
     ingress:
       main:
         enabled: true
