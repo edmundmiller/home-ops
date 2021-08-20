@@ -36,11 +36,9 @@ spec:
       data:
         enabled: true
         existingClaim: paperless-config-v1
-        mountPath: /data
       media:
         enabled: true
         type: custom
-        mountPath: /media
         volumeSpec:
           nfs:
             server: 192.168.1.101
