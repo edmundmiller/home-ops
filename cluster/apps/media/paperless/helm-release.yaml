@@ -35,6 +35,9 @@ spec:
           - hosts:
               - "paperless.${SECRET_DOMAIN}"
     persistence:
+      consume:
+        enabled: true
+        existingClaim: paperless-consume-v1
       data:
         enabled: true
         existingClaim: paperless-config-v1
