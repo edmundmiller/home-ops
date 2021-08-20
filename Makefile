@@ -12,5 +12,8 @@ flux_get_chart:
 flux_get_all:
 	./flux get sources all --all-namespaces
 
+flux_get_kust:
+	./flux get kustomization -A
+
 get_all:
 	kubectl get all,cm,secret,ing -A
