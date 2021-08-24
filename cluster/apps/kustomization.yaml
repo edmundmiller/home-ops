@@ -5,6 +5,7 @@ resources:
 - downloads
 - kube-system
 - media
+- monitoring
 - networking
 - system-upgrade
 - vpn
