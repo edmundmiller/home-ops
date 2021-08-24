@@ -7,4 +7,5 @@ resources:
 - k8s-at-home-charts.yaml
 - metallb-charts.yaml
 - node-feature-discovery-charts.yaml
+- prometheus-community-charts.yaml
 - rook-ceph-charts.yaml
