@@ -41,6 +41,8 @@ spec:
     service:
       webserver:
         enabled: true
+        type: ExternalName
+        externalName: calibre.media.svc.cluster.local
 
     ingress:
       main:
