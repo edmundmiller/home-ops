@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
 - cert-manager.yaml
 - downloads.yaml
+- home.yaml
 - kube-system.yaml
 - media.yaml
 - metallb-system.yaml
