@@ -5,3 +5,4 @@ resources:
   # - code-server.sops.yaml
   # - home-assistant.sops.yaml
   - helm-release.yaml
+  - ser2scok.yaml
