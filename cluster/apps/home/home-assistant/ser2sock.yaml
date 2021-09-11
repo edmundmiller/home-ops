@@ -25,7 +25,7 @@ spec:
       repository: tenstartups/ser2sock
       tag: latest
       imagePullPolicy: Always
-    timezone: 'America/Los_Angeles'
+    timezone: 'America/Chicago'
     device: '/dev/serial/by-id/usb-Silicon_Labs_HubZ_Smart_Home_Controller_41500846-if01-port0'
     puid: '1000'
     pgid: '1000'
@@ -41,6 +41,13 @@ spec:
                     values: ['true'],
                   }
     #              - {key: "feature.node.kubernetes.io/usb-ff_10c4_8a2a.present", operator: In, values: ["true"]}
+    persistence:
+      usb:
+        enabled: true
+        type: hostPath
+        mountPath: /dev/ttyUSB0
+        hostPath: /dev/serial/by-id/usb-Silicon_Labs_HubZ_Smart_Home_Controller_41500846-if01-port0
+        # hostPathType: CharDevice
     resources:
       requests:
         memory: 50Mi
