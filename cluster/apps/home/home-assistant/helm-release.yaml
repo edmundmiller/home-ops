@@ -58,6 +58,11 @@ spec:
       config:
         enabled: true
         existingClaim: home-assistant-config-v1
+      usb:
+        enabled: true
+        type: hostPath
+        mountPath: /dev/ttyUSB1
+        hostPath: /dev/serial/by-id/usb-Silicon_Labs_HubZ_Smart_Home_Controller_41500846-if01-port0
     # nodeSelector:
     #   node-role.kubernetes.io/worker: "true"
     resources:
