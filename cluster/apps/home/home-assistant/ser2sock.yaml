@@ -1,0 +1,49 @@
+################################################################################
+# Ser2Socket is a serial-to-TCP/IP gateway.
+# Could be useful for Home Assistant devices
+################################################################################
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: ser2sock-zigbee
+  namespace: home
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://k8s-at-home.com/charts/
+      chart: ser2sock
+      version: 5.0.0
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-at-home-charts
+        namespace: flux-system
+      interval: 5m
+  values:
+    image:
+      repository: tenstartups/ser2sock
+      tag: latest
+      imagePullPolicy: Always
+    timezone: 'America/Los_Angeles'
+    device: '/dev/serial/by-id/usb-Silicon_Labs_HubZ_Smart_Home_Controller_41500846-if01-port0'
+    puid: '1000'
+    pgid: '1000'
+    baudRate: '57600'
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - {
+                    key: 'feature.node.kubernetes.io/custom-zigbee',
+                    operator: In,
+                    values: ['true'],
+                  }
+    #              - {key: "feature.node.kubernetes.io/usb-ff_10c4_8a2a.present", operator: In, values: ["true"]}
+    resources:
+      requests:
+        memory: 50Mi
+        cpu: 15m
+      limits:
+        memory: 250Mi
