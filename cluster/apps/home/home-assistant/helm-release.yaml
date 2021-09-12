@@ -55,7 +55,7 @@ spec:
       startup:
         enabled: false
 
-    podSecurityContext:
+    securityContext:
       privileged: true
 
     persistence:
