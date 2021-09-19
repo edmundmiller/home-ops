@@ -4,6 +4,7 @@ kind: HelmRelease
 metadata:
   name: zigbee2mqtt
   namespace: home
+  suspend: true
 spec:
   interval: 5m
   chart:
