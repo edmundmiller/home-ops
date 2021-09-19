@@ -32,10 +32,10 @@ spec:
         externalIPs:
           - "${SVC_MOSQUITTO_ADDR}"
         externalTrafficPolicy: Local
-    # auth:
-    #   enabled: true
-    # podAnnotations:
-    #   secret.reloader.stakater.com/reload: mosquitto-config
+    auth:
+      enabled: true
+    podAnnotations:
+      secret.reloader.stakater.com/reload: mosquitto-config
     persistence:
       data:
         enabled: true
