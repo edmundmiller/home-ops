@@ -41,7 +41,7 @@ spec:
         enabled: true
         existingClaim: mosquitto-config-v1
       configinc:
-        enabled: false
+        enabled: true
         type: custom
         volumeSpec:
           secret:
