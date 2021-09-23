@@ -63,6 +63,10 @@ spec:
           - hosts:
               - 'calibre.${SECRET_DOMAIN}'
 
+    podSecurityContext:
+      supplementalGroups:
+        - 100
+
     resources:
       requests:
         cpu: 0.003
