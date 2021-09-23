@@ -23,6 +23,7 @@ spec:
 
     env:
       TZ: 'America/Chicago'
+      PGID: 65539
 
     persistence:
       config:
