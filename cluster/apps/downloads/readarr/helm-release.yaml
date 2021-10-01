@@ -22,7 +22,7 @@ spec:
       tag: v0.1.0.971
     env:
       TZ: 'America/Chicago'
-      PGID: 65539
+      PGID: 568
 
     ingress:
       main:
