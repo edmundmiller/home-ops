@@ -38,7 +38,7 @@ spec:
         volumeSpec:
           nfs:
             server: 192.168.1.101
-            path: /srv/nfs/books
+            path: /srv/nfs
         mountPath: /media
 
     service:
