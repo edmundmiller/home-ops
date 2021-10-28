@@ -11,3 +11,4 @@ resources:
   - readarr
   - sonarr
   - prowlarr
+  - youtubedl-material
