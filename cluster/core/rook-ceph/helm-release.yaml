@@ -22,7 +22,7 @@ spec:
       logLevel: 3
       kubeletDirPath: /var/lib/kubelet
       pluginTolerations:
-      - operator: "Exists"
+        - operator: 'Exists'
     resources:
       requests:
         cpu: 100m

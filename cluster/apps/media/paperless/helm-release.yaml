@@ -18,7 +18,7 @@ spec:
       interval: 5m
   values:
     env:
-      TZ: "America/Chicago"
+      TZ: 'America/Chicago'
       USERMAP_UID: 568
       USERMAP_GID: 568
       PAPERLESS_CONSUMER_POLLING: 300
@@ -26,15 +26,15 @@ spec:
       main:
         enabled: true
         annotations:
-          kubernetes.io/ingress.class: "nginx"
+          kubernetes.io/ingress.class: 'nginx'
         hosts:
-          - host: "paperless.${SECRET_DOMAIN}"
+          - host: 'paperless.${SECRET_DOMAIN}'
             paths:
               - path: /
                 pathType: Prefix
         tls:
           - hosts:
-              - "paperless.${SECRET_DOMAIN}"
+              - 'paperless.${SECRET_DOMAIN}'
     persistence:
       consume:
         enabled: true

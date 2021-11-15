@@ -28,9 +28,9 @@ spec:
       main:
         type: LoadBalancer
         annotations:
-          coredns.io/hostname: "mqtt.${SECRET_DOMAIN}"
+          coredns.io/hostname: 'mqtt.${SECRET_DOMAIN}'
         externalIPs:
-          - "${SVC_MOSQUITTO_ADDR}"
+          - '${SVC_MOSQUITTO_ADDR}'
         externalTrafficPolicy: Local
     auth:
       enabled: true

@@ -21,7 +21,7 @@ spec:
       repository: ghcr.io/k8s-at-home/sonarr
       tag: v3.0.6.1265
     env:
-      TZ: "America/Chicago"
+      TZ: 'America/Chicago'
     ingress:
       main:
         enabled: true
@@ -40,13 +40,13 @@ spec:
         annotations:
           kubernetes.io/ingress.class: 'nginx'
         hosts:
-          - host: "sonarr.${SECRET_DOMAIN}"
+          - host: 'sonarr.${SECRET_DOMAIN}'
             paths:
               - path: /api
                 pathType: Prefix
         tls:
           - hosts:
-              - "sonarr.${SECRET_DOMAIN}"
+              - 'sonarr.${SECRET_DOMAIN}'
 
     podSecurityContext:
       supplementalGroups:

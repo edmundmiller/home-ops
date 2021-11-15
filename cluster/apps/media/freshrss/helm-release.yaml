@@ -18,20 +18,20 @@ spec:
       interval: 5m
   values:
     env:
-      TZ: "America/Chicago"
+      TZ: 'America/Chicago'
     ingress:
       main:
         enabled: true
         annotations:
-          kubernetes.io/ingress.class: "nginx"
+          kubernetes.io/ingress.class: 'nginx'
         hosts:
-          - host: "freshrss.${SECRET_DOMAIN}"
+          - host: 'freshrss.${SECRET_DOMAIN}'
             paths:
               - path: /
                 pathType: Prefix
         tls:
           - hosts:
-              - "freshrss.${SECRET_DOMAIN}"
+              - 'freshrss.${SECRET_DOMAIN}'
     persistence:
       config:
         enabled: true
