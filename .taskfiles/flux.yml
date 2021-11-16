@@ -1,9 +1,34 @@
 ---
-version: "3"
+version: '3'
 
 tasks:
   sync:
     desc: Sync flux-system with the Git Repository
     cmds:
       - flux reconcile source git flux-system
+    silent: true
+  get_helm:
+    desc: TODO
+    cmds:
+      - flux get sources helm --all-namespaces
+    silent: true
+  get_chart:
+    desc: TODO
+    cmds:
+      - flux get sources chart --all-namespaces
+    silent: true
+  get_all:
+    desc: TODO
+    cmds:
+      - flux get sources all --all-namespaces
+    silent: true
+  get_kust:
+    desc: TODO
+    cmds:
+      - flux get kustomization -A
+    silent: true
+  kube_all:
+    desc: TODO
+    cmds:
+      - kubectl get all,cm,secret,ing -A
     silent: true
