@@ -1,8 +1,8 @@
 {
   description = "Flake description";
-  outputs = { self, nixpkgs }: {
+  outputs = { self, nixpkgs-unstable }: {
     # setup the devShell for x86_64-linux.
-    devShell.x86_64-linux = with nixpkgs.legacyPackages.x86_64-linux;
+    devShell.x86_64-linux = with nixpkgs-unstable.legacyPackages.x86_64-linux;
       mkShell {
         buildInputs = [
           # k8s
