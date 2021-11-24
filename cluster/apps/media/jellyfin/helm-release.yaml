@@ -70,11 +70,6 @@ spec:
                   operator: In
                   values:
                     - 'true'
-            - matchExpressions:
-                - key: kubernetes.io/hostname
-                  operator: In
-                  values:
-                    - unas
     resources:
       requests:
         gpu.intel.com/i915: 1

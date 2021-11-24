@@ -43,9 +43,6 @@ spec:
           - name: 'k8s-0'
             devices:
               - name: 'ubuntu--vg-vdb'
-          - name: 'unas'
-            devices:
-              - name: 'zd0'
     cephBlockPools:
       - name: ceph-blockpool
         spec:
