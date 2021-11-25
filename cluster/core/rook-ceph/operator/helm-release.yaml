@@ -16,8 +16,11 @@ spec:
         name: rook-ceph-charts
         namespace: flux-system
   values:
-    crds:
-      enabled: false
+    # crds:
+    #   enabled: false
+    # csi:
+    #   enableCephfsDriver: false
+    #   enableCephfsSnapshotter: false
     resources:
       requests:
         cpu: 100m
