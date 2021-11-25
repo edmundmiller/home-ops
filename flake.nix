@@ -6,6 +6,7 @@
       mkShell {
         buildInputs = [
           # k8s
+          kubectl
           kubernetes-helm
           fluxcd
           # Terraform
