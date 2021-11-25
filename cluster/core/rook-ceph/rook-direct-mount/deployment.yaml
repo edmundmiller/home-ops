@@ -70,7 +70,7 @@ spec:
         - name: nas-data
           nfs:
             server: "${NAS_ADDR}"
-            path: /srv/nfs
+            path: /srv/nfs/minio
         - name: direct-mount-scripts
           projected:
             defaultMode: 0775
