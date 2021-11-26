@@ -30,6 +30,9 @@ spec:
         tls:
           - hosts:
               - "rook.${SECRET_DOMAIN}"
+    configOverride: |
+      [global]
+      osd_pool_default_size = 1
     cephClusterSpec:
       dashboard:
         enabled: true
