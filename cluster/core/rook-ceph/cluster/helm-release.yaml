@@ -36,7 +36,6 @@ spec:
         urlPrefix: /
       mon:
         # HACK Remove once there are more than 2 nodes
-        count: 1
         allowMultiplePerNode: true
       storage:
         useAllNodes: false
@@ -46,7 +45,7 @@ spec:
         nodes:
           - name: 'k8s-0'
             devices:
-              - name: 'ubuntu--vg-vdb'
+              - name: '/dev/disk/by-id/dm-name-ubuntu--vg-vdb'
           - name: 'k8s-1'
             devices:
               - name: "nvme0n1"
