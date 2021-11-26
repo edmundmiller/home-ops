@@ -54,7 +54,8 @@ spec:
         spec:
           failureDomain: host
           replicated:
-            size: 3
+            # HACK Remove once there are more than 2 nodes
+            size: 1
         storageClass:
           enabled: true
           name: ceph-block
