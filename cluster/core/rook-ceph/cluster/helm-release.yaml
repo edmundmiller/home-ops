@@ -47,6 +47,9 @@ spec:
             devices:
               - name: '/dev/disk/by-id/dm-name-ubuntu--vg-vdb'
           - name: 'k8s-1'
+            config:
+              # HACK Remove once there are more than 2 nodes
+              osdsPerDevice: "3"
             devices:
               - name: "nvme0n1"
     cephBlockPools:
