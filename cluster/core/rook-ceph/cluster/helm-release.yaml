@@ -34,8 +34,9 @@ spec:
       dashboard:
         enabled: true
         urlPrefix: /
-      # HACK Remove once there are more than 2 nodes
       mon:
+        # HACK Remove once there are more than 2 nodes
+        count: 1
         allowMultiplePerNode: true
       storage:
         useAllNodes: false
