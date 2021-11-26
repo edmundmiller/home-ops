@@ -43,10 +43,7 @@ spec:
         config:
           osdsPerDevice: "1"
         nodes:
-          - name: 'k8s-0'
-            devices:
-              - name: '/dev/disk/by-id/dm-name-ubuntu--vg-vdb'
-          - name: 'k8s-1'
+          - name: "k8s-1"
             config:
               # HACK Remove once there are more than 2 nodes
               osdsPerDevice: "3"
