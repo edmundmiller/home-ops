@@ -5,7 +5,7 @@ metadata:
   namespace: downloads
   name: tag-tracker-errors
 spec:
-  schedule: "0 * * * *"
+  schedule: '0 * * * *'
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
@@ -20,9 +20,9 @@ spec:
                 - name: QB_HOST
                   value: http://qbittorrent:8080
                 - name: QB_TAG
-                  value: "Tracker Errors"
+                  value: 'Tracker Errors'
               envFrom:
                 - secretRef:
                     name: qbittorrent-creds
               args:
-                - "/app/tag-tracker-errors.py"
+                - '/app/tag-tracker-errors.py'

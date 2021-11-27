@@ -6,7 +6,7 @@ metadata:
   namespace: networking
   name: dyndns-updater
 spec:
-  schedule: "0 * * * *"
+  schedule: '0 * * * *'
   failedJobsHistoryLimit: 1
   successfulJobsHistoryLimit: 3
   concurrencyPolicy: Forbid
@@ -16,27 +16,27 @@ spec:
         spec:
           restartPolicy: Never
           containers:
-          - name: dyndns-updater
-            image: curlimages/curl:7.79.1
-            imagePullPolicy: IfNotPresent
-            envFrom:
-            - secretRef:
-                name: do-token
-            command:
-            - "/bin/sh"
-            - "/app/dyndns-updater.sh"
-            volumeMounts:
             - name: dyndns-updater
-              mountPath: /app/dyndns-updater.sh
-              subPath: dyndns-updater.sh
-              readOnly: true
-          volumes:
+              image: curlimages/curl:7.80.0
+              imagePullPolicy: IfNotPresent
+              envFrom:
+                - secretRef:
+                    name: do-token
+              command:
+                - '/bin/sh'
+                - '/app/dyndns-updater.sh'
+              volumeMounts:
+                - name: dyndns-updater
+                  mountPath: /app/dyndns-updater.sh
+                  subPath: dyndns-updater.sh
+                  readOnly: true
+        volumes:
           - name: dyndns-updater
             projected:
               defaultMode: 0775
               sources:
-              - configMap:
-                  name: dyndns-updater
-                  items:
-                  - key: dyndns-updater.sh
-                    path: dyndns-updater.sh
+                - configMap:
+                    name: dyndns-updater
+                    items:
+                      - key: dyndns-updater.sh
+                        path: dyndns-updater.sh
