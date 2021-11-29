@@ -5,7 +5,6 @@ resources:
   - bazarr
   - calibre
   - qbittorrent
-  - jackett
   - lidarr
   - radarr
   - readarr
