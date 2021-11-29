@@ -10,5 +10,4 @@ spec:
   resources:
     requests:
       storage: 1Gi
-  # FIXME
-  storageClassName: local-path
+  storageClassName: ceph-block
