@@ -86,3 +86,5 @@ spec:
         cpu: 500m
       limits:
         memory: 6000Mi
+    # HACK
+    probes.liveness.enabled: false
