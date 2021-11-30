@@ -23,6 +23,7 @@ spec:
 
     env:
       TZ: 'America/Chicago'
+      logLevel: DEBUG
 
     podAnnotations:
       setGateway: 'true'
