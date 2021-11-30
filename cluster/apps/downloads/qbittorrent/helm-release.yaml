@@ -24,8 +24,6 @@ spec:
     env:
       TZ: 'America/Chicago'
 
-    hostname: qbittorrent
-
     podAnnotations:
       setGateway: 'true'
 
