@@ -1,0 +1,30 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: tailscale-relay
+  namespace: networking
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://charts.visonneau.fr
+      chart: tailscale-relay
+      version: 0.1.0
+      sourceRef:
+        kind: HelmRepository
+        name: mvisonneau-charts
+        namespace: flux-system
+      interval: 5m
+  values:
+    image:
+      repository: docker.io/mvisonneau/tailscale
+      tag: 'v1.16.0'
+    config:
+      variables:
+        TAILSCALE_ADVERTISE_ROUTES: '${CLUSTER_IP_RANGE},${RESERVED_LAN_CIDR}'
+  valuesFrom:
+    - kind: Secret
+      name: tailscale-token-secret
+      valuesKey: tailscale-token
+      targetPath: config.authKey
