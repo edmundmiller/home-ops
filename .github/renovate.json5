@@ -6,24 +6,16 @@
   "suppressNotifications": ["prIgnoreNotification"],
   "rebaseWhen": "conflicted",
   "helm-values": {
-    "fileMatch": [
-      "cluster/.+/helm-release\\.yaml$"
-    ]
+    "fileMatch": ["cluster/.+/helm-release\\.yaml$"]
   },
   "kubernetes": {
-    "fileMatch": [
-      "cluster/.+\\.yaml$"
-    ],
-    "ignorePaths": [
-      "cluster/base/"
-    ],
+    "fileMatch": ["cluster/.+\\.yaml$"],
+    "ignorePaths": ["cluster/base/"]
   },
   "regexManagers": [
     // regexManager to read and process HelmRelease files
     {
-      "fileMatch": [
-        "cluster/.+\\.yaml$"
-      ],
+      "fileMatch": ["cluster/.+\\.yaml$"],
       "matchStrings": [
         // helm releases
         "registryUrl=(?<registryUrl>.*?)\n *chart: (?<depName>.*?)\n *version: (?<currentValue>.*)\n"
@@ -32,9 +24,7 @@
     },
     // regexManager to read and process cert-manager CRD's
     {
-      "fileMatch": [
-        "cluster/crds/cert-manager/.+\\.yaml$"
-      ],
+      "fileMatch": ["cluster/crds/cert-manager/.+\\.yaml$"],
       "matchStrings": [
         "registryUrl=(?<registryUrl>.*?) chart=(?<depName>.*?)\n.*\\/(?<currentValue>.*?)\\/"
       ],
@@ -42,14 +32,12 @@
     },
     // regexManager to read and process Traefik CRD's
     {
-      "fileMatch": [
-        "cluster/crds/traefik/.+\\.yaml$"
-      ],
+      "fileMatch": ["cluster/crds/traefik/.+\\.yaml$"],
       "matchStrings": [
         "registryUrl=(?<registryUrl>.*?) chart=(?<depName>.*?)\n *tag: v(?<currentValue>.*)\n"
       ],
       "datasourceTemplate": "helm"
-    },
+    }
   ],
   "packageRules": [
     // setup datasources
@@ -64,7 +52,7 @@
       "enabled": true,
       "commitMessageTopic": "container image {{depName}}",
       "commitMessageExtra": "to {{#if isSingleVersion}}v{{{newVersion}}}{{else}}{{{newValue}}}{{/if}}",
-      "matchUpdateTypes": ["major", "minor", "patch"],
+      "matchUpdateTypes": ["major", "minor", "patch"]
     },
     // add labels according to package and update types
     {
