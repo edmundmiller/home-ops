@@ -34,8 +34,6 @@ spec:
       [global]
       osd_pool_default_size = 1
     cephClusterSpec:
-      crashCollector:
-        disable: true
       dashboard:
         enabled: true
         urlPrefix: /
