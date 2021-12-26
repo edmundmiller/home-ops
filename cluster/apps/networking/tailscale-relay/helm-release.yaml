@@ -22,7 +22,7 @@ spec:
       tag: 'v1.16.0'
     config:
       variables:
-        TAILSCALE_ADVERTISE_ROUTES: '${CLUSTER_IP_RANGE},${RESERVED_LAN_CIDR}'
+        TAILSCALE_ADVERTISE_ROUTES: '${CLUSTER_IP_RANGE}'
   valuesFrom:
     - kind: Secret
       name: tailscale-token-secret
