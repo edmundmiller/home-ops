@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
   - grocy
   - home-assistant
-  - jupyterhub
+  # FIXME
+  # - jupyterhub
   - mosquitto
   - zigbee2mqtt
