@@ -21,6 +21,10 @@ spec:
                   value: http://qbittorrent:8080
                 - name: QB_TAG
                   value: 'Tracker Errors'
+                - name: QB_USERNAME
+                  value: "${SECRET_QB_USERNAME}"
+                - name: QB_PASSWORD
+                  value: "${SECRET_QB_PASSWORD}"
               envFrom:
                 - secretRef:
                     name: qbittorrent-creds
