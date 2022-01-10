@@ -5,4 +5,5 @@ resources:
   - intel-gpu-plugin
   - node-feature-discovery
   - metrics-server
+  - reflector
   - reloader
