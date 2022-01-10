@@ -36,6 +36,8 @@ spec:
         tls:
           - hosts:
               - 'paperless.${SECRET_DOMAIN}'
+    redis:
+      enabled: true
     persistence:
       consume:
         enabled: true
