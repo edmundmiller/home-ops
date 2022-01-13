@@ -15,4 +15,6 @@ spec:
         kind: HelmRepository
         name: longhorn-charts
         namespace: flux-system
-  # values:
+  values:
+    persistence:
+      defaultClassReplicaCount: 2
