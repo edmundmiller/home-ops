@@ -4,6 +4,7 @@ resources:
   - namespaces
   - cert-manager
   - kube-system
+  - longhorn-system
   - metallb-system
-  - rook-ceph
+  # - rook-ceph
   - system-upgrade
