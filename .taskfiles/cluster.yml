@@ -2,7 +2,9 @@
 version: "3"
 
 vars:
-  K3S_LB_ADDR: "192.168.1.123"
+  K3S_LB_ADDR: "192.168.1.119"
+  K3S_PRIMARY_MASTER_NODE_USERNAME: "emiller"
+  K3S_PRIMARY_MASTER_NODE_ADDR: "192.168.1.120"
 
 tasks:
   kubeconfig:
