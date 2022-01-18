@@ -16,6 +16,7 @@
           ansible
           ipcalc
           # Dev tools
+          age
           pre-commit
           go # gitleaksbs
           sops

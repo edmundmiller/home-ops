@@ -32,3 +32,13 @@ tasks:
     cmds:
       - kubectl get all,cm,secret,ing -A
     silent: true
+  sops_decrypt:
+    desc: Decrypt all secret files
+    cmds:
+      - find ./cluster -type f -iname "*sops*" -exec sops --decrypt --in-place {} \;
+    silent: true
+  sops_encrypt:
+    desc: encrypt all secret files
+    cmds:
+      - find ./cluster -type f -iname "*sops*" -exec sops --encrypt --in-place {} \;
+    silent: true
