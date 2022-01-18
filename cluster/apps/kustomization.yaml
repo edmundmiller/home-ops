@@ -5,6 +5,7 @@ resources:
   - default
   - downloads
   - home
+  - kasten-io
   - kube-system
   - media
   - monitoring
