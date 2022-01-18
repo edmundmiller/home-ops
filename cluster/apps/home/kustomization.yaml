@@ -6,5 +6,6 @@ resources:
   # FIXME
   # - jupyterhub
   - mosquitto
-  - node-red
+  # FIXME
+  # - node-red
   - zigbee2mqtt
