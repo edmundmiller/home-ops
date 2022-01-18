@@ -17,6 +17,7 @@
           ipcalc
           # Dev tools
           pre-commit
+          go # gitleaksbs
           sops
           go-task
           k9s
