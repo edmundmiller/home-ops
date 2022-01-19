@@ -36,9 +36,6 @@ spec:
     #   [global]
     #   osd_pool_default_size = 1
     cephClusterSpec:
-      cleanupPolicy:
-        confirmation: "yes-really-destroy-data"
-        allowUninstallWithVolumes: true
       dashboard:
         enabled: true
         urlPrefix: /
