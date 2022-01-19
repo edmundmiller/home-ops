@@ -73,7 +73,7 @@ spec:
         volumeSpec:
           nfs:
             server: '${NAS_ADDR}'
-            path: /data/backup/app/lidarr
+            path: /srv/nfs/backup/app/lidarr
         mountPath: /config/Backups
         readOnly: false
     resources:
