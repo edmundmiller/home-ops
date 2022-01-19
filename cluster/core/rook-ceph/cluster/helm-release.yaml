@@ -44,15 +44,14 @@ spec:
         # HACK Remove once there are more than 2 nodes
         allowMultiplePerNode: true
       storage:
-        useAllNodes: false
-        useAllDevices: false
-        nodes:
-          - name: "k8s-1"
-            config:
-              # HACK Remove once there are more than 2 nodes
-              osdsPerDevice: "3"
-            devices:
-              - name: "nvme0n1"
+        useAllNodes: true
+        useAllDevices: true
+        # nodes:
+        #   - name: "k8s-1"
+        #     config:
+        #       osdsPerDevice: "1"
+        #     devices:
+        #       - name: "nvme0n1"
     cephBlockPools:
       - name: ceph-blockpool
         spec:
