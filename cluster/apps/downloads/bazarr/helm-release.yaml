@@ -55,6 +55,6 @@ spec:
         volumeSpec:
           nfs:
             server: '${NAS_ADDR}'
-            path: /data/backup/app/bazarr
+            path: /srv/nfs/backup/app/bazarr
         mountPath: /config/Backups
         readOnly: false

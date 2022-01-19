@@ -46,7 +46,7 @@ spec:
         volumeSpec:
           nfs:
             server: '${NAS_ADDR}'
-            path: /data/backup/app/prowlarr
+            path: /srv/nfs/backup/app/prowlarr
         mountPath: /config/Backups
         readOnly: false
     resources:
