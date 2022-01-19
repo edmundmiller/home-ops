@@ -32,9 +32,9 @@ spec:
         tls:
           - hosts:
               - "rook.${SECRET_DOMAIN}"
-    # configOverride: |
-    #   [global]
-    #   osd_pool_default_size = 1
+    configOverride: |
+      [global]
+      osd_pool_default_size = 1
     cephClusterSpec:
       dashboard:
         enabled: true
@@ -46,6 +46,8 @@ spec:
       storage:
         useAllNodes: true
         useAllDevices: true
+        config:
+          osdsPerDevice: "1" # this value can be overridden at the node or device level
         # nodes:
         #   - name: "k8s-1"
         #     config:
