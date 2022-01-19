@@ -46,6 +46,15 @@ spec:
         type: custom
         volumeSpec:
           nfs:
-            server: 192.168.1.101
+            server: '${NAS_ADDR}'
             path: /srv/nfs
         mountPath: /media
+      backup:
+        enabled: true
+        type: custom
+        volumeSpec:
+          nfs:
+            server: '${NAS_ADDR}'
+            path: /data/backup/app/bazarr
+        mountPath: /config/Backups
+        readOnly: false

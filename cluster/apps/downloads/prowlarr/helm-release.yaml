@@ -40,6 +40,15 @@ spec:
       config:
         enabled: true
         existingClaim: prowlarr-config-v1
+      backup:
+        enabled: true
+        type: custom
+        volumeSpec:
+          nfs:
+            server: '${NAS_ADDR}'
+            path: /data/backup/app/prowlarr
+        mountPath: /config/Backups
+        readOnly: false
     resources:
       requests:
         memory: 100Mi
