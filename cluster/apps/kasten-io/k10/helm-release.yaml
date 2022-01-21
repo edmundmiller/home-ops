@@ -24,7 +24,7 @@ spec:
       email: emiller88@@users.noreply.github.com
     global:
       persistence:
-        storageClass: ceph-block
+        storageClass: local-path
     auth:
       tokenAuth:
         enabled: true
