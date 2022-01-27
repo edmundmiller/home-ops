@@ -34,7 +34,9 @@ spec:
               - "rook.${SECRET_DOMAIN}"
     configOverride: |
       [global]
-      osd_pool_default_size = 1
+      mon_allow_pool_delete = true
+      osd_pool_default_size = 2
+      osd_pool_default_min_size = 1
     cephClusterSpec:
       dashboard:
         enabled: true
