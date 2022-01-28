@@ -48,8 +48,8 @@ spec:
         # HACK Remove once there are more than 2 nodes
         allowMultiplePerNode: true
       storage:
-        useAllNodes: true
-        useAllDevices: true
+        useAllNodes: false
+        useAllDevices: false
         config:
           osdsPerDevice: "1" # this value can be overridden at the node or device level
         nodes:
