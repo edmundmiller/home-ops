@@ -25,13 +25,13 @@ spec:
     ingress:
       dashboard:
         annotations:
-          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          traefik.ingress.kubernetes.io/router.entrypoints: 'websecure'
         host:
-          name: "rook.${SECRET_DOMAIN}"
-          path: "/"
+          name: 'rook.${SECRET_DOMAIN}'
+          path: '/'
         tls:
           - hosts:
-              - "rook.${SECRET_DOMAIN}"
+              - 'rook.${SECRET_DOMAIN}'
     configOverride: |
       [global]
       mon_allow_pool_delete = true
@@ -51,13 +51,11 @@ spec:
         useAllNodes: false
         useAllDevices: false
         config:
-          osdsPerDevice: "1" # this value can be overridden at the node or device level
-        nodes:
-          - name: "k8s-1"
+          - name: 'k8s-1'
             config:
-              osdsPerDevice: "3"
+              osdsPerDevice: '3'
             devices:
-              - name: "nvme0n1"
+              - name: 'nvme0n1'
     cephBlockPools:
       - name: ceph-blockpool
         spec:
@@ -72,7 +70,7 @@ spec:
           reclaimPolicy: Delete
           allowVolumeExpansion: true
           parameters:
-            imageFormat: "2"
+            imageFormat: '2'
             imageFeatures: layering
             csi.storage.k8s.io/provisioner-secret-name: rook-csi-rbd-provisioner
             csi.storage.k8s.io/provisioner-secret-namespace: rook-ceph
