@@ -36,6 +36,15 @@ spec:
       [global]
       osd_pool_default_size = 1
     cephClusterSpec:
+      placement:
+        all:
+          tolerations:
+            - effect: NoSchedule
+              operator: Exists
+            - effect: NoExecute
+              operator: Exists
+      crashCollector:
+        disable: false
       mgr:
         count: 2
       dashboard:
