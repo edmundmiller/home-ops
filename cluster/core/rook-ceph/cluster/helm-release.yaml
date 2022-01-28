@@ -34,9 +34,7 @@ spec:
               - 'rook.${SECRET_DOMAIN}'
     configOverride: |
       [global]
-      mon_allow_pool_delete = true
       osd_pool_default_size = 1
-      osd_pool_default_min_size = 1
     cephClusterSpec:
       mgr:
         count: 2
@@ -51,6 +49,11 @@ spec:
         useAllNodes: false
         useAllDevices: false
         config:
+          osdsPerDevice: '1' # this value can be overridden at the node or device level
+        nodes:
+          - name: 'k8s-0'
+            devices:
+              - name: 'sda'
           - name: 'k8s-1'
             config:
               osdsPerDevice: '3'
