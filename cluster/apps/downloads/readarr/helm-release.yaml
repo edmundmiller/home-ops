@@ -29,19 +29,7 @@ spec:
         enabled: true
         ingressClassName: 'traefik'
         annotations:
-          traefik.ingress.kubernetes.io/router.entrypoints: 'websecure'
-        hosts:
-          - host: 'readarr.${SECRET_DOMAIN}'
-            paths:
-              - path: /
-                pathType: Prefix
-        tls:
-          - hosts:
-              - 'readarr.${SECRET_DOMAIN}'
-      api:
-        enabled: true
-        ingressClassName: 'traefik'
-        annotations:
+          cert-manager.io/cluster-issuer: 'letsencrypt-production'
           traefik.ingress.kubernetes.io/router.entrypoints: 'websecure'
         hosts:
           - host: 'readarr.${SECRET_DOMAIN}'
@@ -51,6 +39,7 @@ spec:
         tls:
           - hosts:
               - 'readarr.${SECRET_DOMAIN}'
+            secretName: 'readarr-tls'
 
     podSecurityContext:
       supplementalGroups:

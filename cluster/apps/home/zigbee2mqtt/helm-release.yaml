@@ -28,6 +28,7 @@ spec:
         enabled: true
         ingressClassName: 'traefik'
         annotations:
+          cert-manager.io/cluster-issuer: 'letsencrypt-production'
           traefik.ingress.kubernetes.io/router.entrypoints: 'websecure'
         hosts:
           - host: 'zigbee2mqtt.${SECRET_DOMAIN}'
@@ -37,6 +38,8 @@ spec:
         tls:
           - hosts:
               - 'zigbee2mqtt.${SECRET_DOMAIN}'
+            secretName: 'zigbee2mqtt-tls'
+
     persistence:
       config:
         enabled: true

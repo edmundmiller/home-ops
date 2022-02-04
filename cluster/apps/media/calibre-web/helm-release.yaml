@@ -25,17 +25,21 @@ spec:
     ingress:
       main:
         enabled: true
+        ingressClassName: 'traefik'
         annotations:
+          cert-manager.io/cluster-issuer: 'letsencrypt-production'
           traefik.ingress.kubernetes.io/router.entrypoints: 'websecure'
         hosts:
-          - host: 'calibre-web.${SECRET_DOMAIN}'
+          - host: 'cw.${SECRET_DOMAIN}'
             paths:
               - path: /
                 pathType: Prefix
 
         tls:
           - hosts:
-              - 'calibre-web.${SECRET_DOMAIN}'
+              - 'cw.${SECRET_DOMAIN}'
+            secretName: 'calibre-web-tls'
+
     persistence:
       config:
         enabled: true

@@ -77,6 +77,7 @@ spec:
         enabled: true
         ingressClassName: 'traefik'
         annotations:
+          cert-manager.io/cluster-issuer: 'letsencrypt-production'
           traefik.ingress.kubernetes.io/router.entrypoints: 'websecure'
         hosts:
           - host: 'alert-manager.${SECRET_DOMAIN}'
@@ -86,6 +87,8 @@ spec:
         tls:
           - hosts:
               - 'alert-manager.${SECRET_DOMAIN}'
+            secretName: 'alert-manager-tls'
+
       alertmanagerSpec:
         storage:
           volumeClaimTemplate:

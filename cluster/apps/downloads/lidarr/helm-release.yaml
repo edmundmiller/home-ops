@@ -41,6 +41,7 @@ spec:
         enabled: true
         ingressClassName: 'traefik'
         annotations:
+          cert-manager.io/cluster-issuer: 'letsencrypt-production'
           traefik.ingress.kubernetes.io/router.entrypoints: 'websecure'
         hosts:
           - host: 'lidarr.${SECRET_DOMAIN}'
@@ -50,6 +51,7 @@ spec:
         tls:
           - hosts:
               - 'lidarr.${SECRET_DOMAIN}'
+            secretName: 'lidarr-tls'
 
     podSecurityContext:
       supplementalGroups:
