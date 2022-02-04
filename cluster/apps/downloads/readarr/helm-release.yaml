@@ -34,7 +34,7 @@ spec:
         hosts:
           - host: 'readarr.${SECRET_DOMAIN}'
             paths:
-              - path: /api
+              - path: /
                 pathType: Prefix
         tls:
           - hosts:
