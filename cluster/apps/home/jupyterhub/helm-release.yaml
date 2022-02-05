@@ -20,6 +20,14 @@ spec:
     # image:
     #   repository: ghcr.io/home-assistant/home-assistant
     #   tag: 2021.8.7
+    hub:
+      config:
+        GitHubOAuthenticator:
+          client_id: '${SECRET_JUPYTERHUB_CLIENT_ID}'
+          client_secret: '${SECRET_JUPYTERHUB_CLIENT_SECRET}'
+          oauth_callback_url: 'https://jupyter.${SECRET_DOMAIN}/hub/oauth_callback'
+        JupyterHub:
+          authenticator_class: github
     singleuser:
       image:
         name: jupyter/datascience-notebook
