@@ -24,4 +24,3 @@ spec:
       image:
         name: jupyter/datascience-notebook
         tag: latest
-      defaultUrl: '/lab'
