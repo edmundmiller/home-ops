@@ -3,8 +3,7 @@ kind: Kustomization
 resources:
   - grocy
   - home-assistant
-  # FIXME
-  # - jupyterhub
+  - jupyterhub
   - mosquitto
   # FIXME
   # - node-red
