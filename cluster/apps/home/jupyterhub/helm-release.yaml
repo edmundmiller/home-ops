@@ -24,6 +24,7 @@ spec:
       image:
         name: jupyter/datascience-notebook
         tag: latest
+      # TODO Add ihaskell
       extraEnv:
         EDITOR: 'vim'
       storage:
@@ -32,7 +33,7 @@ spec:
 
     ingress:
       enabled: true
-      ingressClassName: 'traefik'
+      # ingressClassName: 'traefik'
       annotations:
         cert-manager.io/cluster-issuer: 'letsencrypt-production'
         traefik.ingress.kubernetes.io/router.entrypoints: 'websecure'
