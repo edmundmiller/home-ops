@@ -24,3 +24,5 @@ spec:
       image:
         name: jupyter/datascience-notebook
         tag: latest
+      extraEnv:
+        EDITOR: 'vim'
