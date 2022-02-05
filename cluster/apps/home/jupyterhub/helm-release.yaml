@@ -26,3 +26,6 @@ spec:
         tag: latest
       extraEnv:
         EDITOR: 'vim'
+      storage:
+        dynamic:
+          storageClass: local-path
