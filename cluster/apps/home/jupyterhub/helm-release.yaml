@@ -29,3 +29,16 @@ spec:
       storage:
         dynamic:
           storageClass: local-path
+
+    ingress:
+      enabled: true
+      ingressClassName: 'traefik'
+      annotations:
+        cert-manager.io/cluster-issuer: 'letsencrypt-production'
+        traefik.ingress.kubernetes.io/router.entrypoints: 'websecure'
+      hosts:
+        - 'jupyter.${SECRET_DOMAIN}'
+      tls:
+        - hosts:
+            - 'jupyter.${SECRET_DOMAIN}'
+          secretName: 'jupyter-tls'
