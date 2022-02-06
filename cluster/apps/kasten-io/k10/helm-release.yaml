@@ -31,16 +31,15 @@ spec:
     clusterName: k8s
 
     ingress:
-      enabled: true
-      annotations:
-        cert-manager.io/cluster-issuer: 'letsencrypt-production'
-        traefik.ingress.kubernetes.io/router.entrypoints: 'websecure'
+      create: true
+      class: traefik
+      host: &host "k10.${SECRET_DOMAIN}"
+      urlPath: k10
       hosts:
-        - 'k10.${SECRET_DOMAIN}'
+        - *host
       tls:
-        - hosts:
-            - 'k10.${SECRET_DOMAIN}'
-          secretName: 'k10-tls'
+        enabled: true
+        secretName: 'k10-tls'
 
     grafana:
-      enabled: false
+      enabled: true
