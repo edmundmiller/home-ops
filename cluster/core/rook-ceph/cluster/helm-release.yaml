@@ -32,6 +32,7 @@ spec:
         tls:
           - hosts:
               - 'rook.${SECRET_DOMAIN}'
+            secretName: 'rook-tls'
     configOverride: |
       [global]
       osd_pool_default_size = 1
