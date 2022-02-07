@@ -36,4 +36,4 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: freshrss-config-v1
+        existingClaim: freshrss-config-v2

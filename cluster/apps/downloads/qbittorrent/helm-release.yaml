@@ -84,7 +84,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: qbittorrent-config-v1
+        existingClaim: qbittorrent-config-v2
       media:
         enabled: true
         type: custom
