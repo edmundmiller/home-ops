@@ -41,10 +41,6 @@ spec:
               - 'readarr.${SECRET_DOMAIN}'
             secretName: 'readarr-tls'
 
-    podSecurityContext:
-      supplementalGroups:
-        - 100
-
     persistence:
       config:
         enabled: true
