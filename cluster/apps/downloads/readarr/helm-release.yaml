@@ -22,7 +22,6 @@ spec:
       tag: v0.1.0.1232
     env:
       TZ: 'America/Chicago'
-      PGID: 568
 
     ingress:
       main:
@@ -40,6 +39,10 @@ spec:
           - hosts:
               - 'readarr.${SECRET_DOMAIN}'
             secretName: 'readarr-tls'
+
+    podSecurityContext:
+      supplementalGroups:
+        - 100
 
     persistence:
       config:
