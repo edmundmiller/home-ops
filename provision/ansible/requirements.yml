@@ -9,3 +9,5 @@ collections:
 roles:
   - src: xanmanning.k3s
     version: v3.1.0
+  - src: aeriscloud.disk
+    version: v2.0.0

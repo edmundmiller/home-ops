@@ -13,3 +13,11 @@ k3s_agent:
     - "feature-gates=GracefulNodeShutdown=true"
     # Allow k8s services to contain TCP and UDP on the same port
     - "feature-gates=MixedProtocolLBService=true"
+
+disk_additional_disks:
+  - disk: /dev/nvme0n1
+    part: /dev/nvme0n1p1
+    fstype: ext4
+    mount: /data
+    user: kah
+    group: kah

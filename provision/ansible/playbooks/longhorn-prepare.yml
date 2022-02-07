@@ -1,0 +1,36 @@
+---
+- hosts:
+    # TODO
+    # - master
+    - worker
+  become: true
+  gather_facts: true
+  any_errors_fatal: true
+  pre_tasks:
+    - name: Pausing for 5 seconds...
+      pause:
+        seconds: 5
+  tasks:
+    - name: Ensure group "kah" exists with correct gid
+      group:
+        name: kah
+        state: present
+        gid: 568
+
+    - name: Create kah user
+      user:
+        name: kah
+        comment: k8s at home
+        uid: 568
+        group: kah
+
+    - name: Ensure nfs and open-iscsi
+      apt:
+        pkg:
+          - open-iscsi
+          - nfs-common
+
+    - name: Setup storage disks
+      include_role:
+        name: aeriscloud.disk
+        public: true
