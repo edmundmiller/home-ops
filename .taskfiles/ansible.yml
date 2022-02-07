@@ -46,6 +46,12 @@ tasks:
     cmds:
       - "ansible-playbook -i {{.ANSIBLE_INVENTORY_DIR}}/hosts.yml {{.ANSIBLE_PLAYBOOK_DIR}}/k3s-nuke.yml"
 
+  playbook:ceph-nuke:
+    desc: Uninstall rook-ceph on the nodes
+    dir: provision/ansible
+    cmds:
+      - "ansible-playbook -i {{.ANSIBLE_INVENTORY_DIR}}/hosts.yml {{.ANSIBLE_PLAYBOOK_DIR}}/nuke-rook-ceph.yml"
+
   adhoc:ping:
     desc: Ping all the hosts
     dir: provision/ansible
