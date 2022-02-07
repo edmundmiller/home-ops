@@ -31,6 +31,27 @@
           - nfs-common
 
     - name: Setup storage disks
-      include_role:
-        name: aeriscloud.disk
-        public: true
+      block:
+        - name: Create a new ext4 primary partition
+          parted:
+            device: /dev/nvme0n1
+            number: 1
+            state: present
+            fs_type: ext4
+        - name: Create a ext4 filesystem on /dev/nvme0n1
+          filesystem:
+            fstype: ext4
+            dev: /dev/nvme0n1
+        - name: Mount Disk to /data
+          mount:
+            path: /data
+            src: /dev/nvme0n1p1
+            fstype: ext4
+            state: mounted
+        - name: Give kah ownership
+          file:
+            path: /data
+            owner: kah
+            group: kah
+            recurse: yes
+            # mode: '1777'

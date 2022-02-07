@@ -10,7 +10,6 @@ kubeconfig
 .config.env
 # Ansible
 xanmanning.k3s*
-aeriscloud.disk*
 # Terraform
 .terraform
 .terraform.tfstate*
