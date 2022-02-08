@@ -19,6 +19,10 @@ spec:
     persistence:
       defaultClassReplicaCount: 2
 
+    defaultSettings:
+      backupTarget: 's3://longhorn@us-east-1'
+      backupTargetCredentialSecret: longhorn-minio-secret
+
     ingress:
       enabled: true
       annotations:
