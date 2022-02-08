@@ -41,13 +41,14 @@ spec:
             secretName: 'lidarr-tls'
 
     podSecurityContext:
+      fsGroup: 0
       supplementalGroups:
         - 100
 
     persistence:
       config:
         enabled: true
-        existingClaim: lidarr-config-v1
+        existingClaim: lidarr-config-v2
       media:
         enabled: true
         type: custom

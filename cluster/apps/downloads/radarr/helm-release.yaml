@@ -42,6 +42,7 @@ spec:
             secretName: 'radarr-tls'
 
     podSecurityContext:
+      fsGroup: 0
       supplementalGroups:
         - 100
 

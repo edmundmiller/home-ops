@@ -39,10 +39,15 @@ spec:
               - 'bazarr.${SECRET_DOMAIN}'
             secretName: 'bazarr-tls'
 
+    podSecurityContext:
+      fsGroup: 0
+      supplementalGroups:
+        - 100
+
     persistence:
       config:
         enabled: true
-        existingClaim: bazarr-config-v1
+        existingClaim: bazarr-config-v2
       media:
         enabled: true
         type: custom

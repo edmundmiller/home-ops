@@ -23,7 +23,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: youtubedl-material-config-v1
+        existingClaim: youtubedl-material-config-v2
       media:
         enabled: true
         type: custom

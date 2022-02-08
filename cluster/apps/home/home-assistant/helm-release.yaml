@@ -62,7 +62,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: home-assistant-config-v1
+        existingClaim: home-assistant-config-v2
     # nodeSelector:
     #   node-role.kubernetes.io/worker: "true"
     resources:

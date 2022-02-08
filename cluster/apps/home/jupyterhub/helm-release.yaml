@@ -48,7 +48,7 @@ spec:
         EDITOR: 'vim'
       storage:
         dynamic:
-          storageClass: local-path
+          storageClass: longhorn
 
     ingress:
       enabled: true

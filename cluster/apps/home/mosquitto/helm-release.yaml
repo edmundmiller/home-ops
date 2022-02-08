@@ -39,7 +39,7 @@ spec:
     persistence:
       data:
         enabled: true
-        existingClaim: mosquitto-config-v1
+        existingClaim: mosquitto-config-v2
       configinc:
         enabled: true
         type: custom

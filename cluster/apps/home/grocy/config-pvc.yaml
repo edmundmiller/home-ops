@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: grocy-config-v1
+  name: grocy-config-v2
   namespace: home
 spec:
   accessModes:
@@ -10,4 +10,4 @@ spec:
   resources:
     requests:
       storage: 15Gi
-  storageClassName: local-path
+  storageClassName: longhorn

@@ -51,4 +51,4 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: grocy-config-v1
+        existingClaim: grocy-config-v2

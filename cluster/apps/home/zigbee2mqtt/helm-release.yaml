@@ -43,7 +43,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: zigbee2mqtt-config-v1
+        existingClaim: zigbee2mqtt-config-v2
         mountPath: '/data'
     config:
       homeassistant: true
