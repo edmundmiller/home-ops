@@ -17,6 +17,9 @@ spec:
         namespace: flux-system
   values:
     persistence:
+      # workaround for https://github.com/longhorn/longhorn/issues/2964
+      # https://github.com/Marx2/homelab/commit/407c323d413a044e640a62d25ddfee5fc4705fd4
+      defaultFsType: ext4
       defaultClassReplicaCount: 2
 
     defaultSettings:
