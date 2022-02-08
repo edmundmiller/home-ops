@@ -41,6 +41,7 @@ spec:
             secretName: 'readarr-tls'
 
     podSecurityContext:
+      fsGroup: 0
       supplementalGroups:
         - 100
 
