@@ -32,5 +32,6 @@ spec:
 
     ingress:
       enabled: true
+      ingressClassName: 'traefik'
       host: 'longhorn.${SECRET_DOMAIN}'
       tls: false
