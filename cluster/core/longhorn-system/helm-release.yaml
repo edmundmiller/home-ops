@@ -27,7 +27,8 @@ spec:
         jobList: '[{"name":"daily", "task":"backup", "cron":"0 6 * * ?", "retain":2,"labels": {"interval":"daily"}}]'
 
     defaultSettings:
-      backupTarget: 'nfs://${NAS_ADDR}:/srv/nfs/longhorn'
+      backupTarget: 's3://${SECRET_LONGHORN_BUCKET}/'
+      backupTargetCredentialSecret: longhorn-b2-secret
 
     ingress:
       enabled: true
