@@ -21,6 +21,10 @@ spec:
       # https://github.com/Marx2/homelab/commit/407c323d413a044e640a62d25ddfee5fc4705fd4
       defaultFsType: ext4
       defaultClassReplicaCount: 2
+      reclaimPolicy: Retain
+      recurringJobs:
+        enable: true
+        jobList: '[{"name":"daily", "task":"backup", "cron":"0 6 * * ?", "retain":2,"labels": {"interval":"daily"}}]'
 
     defaultSettings:
       backupTarget: 'nfs://${NAS_ADDR}:/srv/nfs/longhorn'
