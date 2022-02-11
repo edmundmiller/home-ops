@@ -24,9 +24,12 @@ spec:
       defaultEnable: false
       namespaceSelector:
         matchNames:
-          - default
+          - downloads
+          - home
+          - media
+          - monitoring
           - networking
-      name: 'you'
+      name: 'Edmund'
       customApps:
         - name: Some External Cluster Service
           url: http://192.168.1.100:5000
