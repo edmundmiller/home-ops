@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
   - grocy
   - hedgedoc
+  - hajimari
   - home-assistant
   - jupyterhub
   - mosquitto
