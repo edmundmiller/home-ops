@@ -34,7 +34,7 @@ spec:
       tag: v4.4.0
 
     env:
-      TZ: 'America/Chicago'
+      TZ: '${TIMEZONE}'
       logLevel: DEBUG
 
     podAnnotations:

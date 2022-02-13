@@ -6,6 +6,7 @@ metadata:
   namespace: flux-system
 data:
   NAS_ADDR: '192.168.1.101'
+  TIMEZONE: 'America/Chicago'
   #
   METALLB_LB_RANGE: '192.168.1.150-192.168.1.160'
   METALLB_TRAEFIK_ADDR: '192.168.1.150'

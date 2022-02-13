@@ -21,7 +21,7 @@ spec:
       repository: ghcr.io/koenkk/zigbee2mqtt
       tag: 1.23.0
     env:
-      TZ: 'America/Chicago'
+      TZ: '${TIMEZONE}'
       ZIGBEE2MQTT_DATA: /data
     ingress:
       main:

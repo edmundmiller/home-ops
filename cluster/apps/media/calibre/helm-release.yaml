@@ -22,7 +22,7 @@ spec:
       tag: version-v5.21.0
 
     env:
-      TZ: 'America/Chicago'
+      TZ: '${TIMEZONE}'
       PUID: 568
       PGID: 568
 

@@ -20,7 +20,7 @@ spec:
       repository: ghcr.io/linuxserver/hedgedoc
       tag: version-1.9.0
     env:
-      TZ: 'America/Chicago'
+      TZ: '${TIMEZONE}'
     # envFrom:
     #   - secretRef:
     #       name: home-assistant

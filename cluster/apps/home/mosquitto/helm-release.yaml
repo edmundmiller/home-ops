@@ -22,7 +22,7 @@ spec:
       tag: v2.0.14
 
     env:
-      TZ: 'America/Chicago'
+      TZ: '${TIMEZONE}'
 
     service:
       main:

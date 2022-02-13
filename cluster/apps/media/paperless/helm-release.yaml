@@ -18,7 +18,7 @@ spec:
       interval: 5m
   values:
     env:
-      TZ: 'America/Chicago'
+      TZ: '${TIMEZONE}'
       USERMAP_UID: 568
       USERMAP_GID: 568
       PAPERLESS_CONSUMER_POLLING: 300

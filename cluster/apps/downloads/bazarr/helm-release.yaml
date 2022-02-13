@@ -21,7 +21,7 @@ spec:
       repository: ghcr.io/k8s-at-home/bazarr
       tag: v1.0.2
     env:
-      TZ: 'America/Chicago'
+      TZ: '${TIMEZONE}'
     ingress:
       main:
         enabled: true

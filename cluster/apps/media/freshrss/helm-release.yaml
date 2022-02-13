@@ -18,7 +18,7 @@ spec:
       interval: 5m
   values:
     env:
-      TZ: 'America/Chicago'
+      TZ: '${TIMEZONE}'
     ingress:
       main:
         enabled: true
