@@ -43,10 +43,10 @@ spec:
     persistence:
       consume:
         enabled: true
-        existingClaim: paperless-consume-v1
+        existingClaim: paperless-consume-v2
       data:
         enabled: true
-        existingClaim: paperless-config-v1
+        existingClaim: paperless-config-v2
       media:
         enabled: true
         type: custom
