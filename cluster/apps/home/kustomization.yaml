@@ -5,7 +5,6 @@ resources:
   - hedgedoc
   - hajimari
   - home-assistant
-  - jupyterhub
   - mosquitto
   # FIXME
   # - node-red

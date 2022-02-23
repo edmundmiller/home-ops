@@ -3,7 +3,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: hub-db-dir
-  namespace: home
+  namespace: dev
 spec:
   accessModes:
     - ReadWriteOnce
