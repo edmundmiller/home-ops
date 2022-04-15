@@ -18,9 +18,10 @@ spec:
       interval: 5m
   values:
     env:
-      TZ: '${TIMEZONE}'
+      PAPERLESS_TIME_ZONE: '${TIMEZONE}'
       USERMAP_UID: 568
       USERMAP_GID: 568
+      PAPERLESS_REDIS: 'redis://localhost:6379'
       PAPERLESS_CONSUMER_POLLING: 300
     ingress:
       main:
@@ -40,6 +41,7 @@ spec:
             secretName: 'paperless-tls'
     redis:
       enabled: true
+
     persistence:
       consume:
         enabled: true
