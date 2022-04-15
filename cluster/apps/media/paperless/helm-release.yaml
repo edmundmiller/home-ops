@@ -18,10 +18,18 @@ spec:
       interval: 5m
   values:
     env:
-      PAPERLESS_TIME_ZONE: '${TIMEZONE}'
+      PAPERLESS_REDIS: 'redis://paperless-redis-master'
+      PAPERLESS_OCR_LANGUAGE: eng
       USERMAP_UID: 568
       USERMAP_GID: 568
-      PAPERLESS_REDIS: 'redis://localhost:6379'
+      PAPERLESS_TIME_ZONE: '${TIMEZONE}'
+      PAPERLESS_DBNAME: paperless
+      PAPERLESS_DBUSER: paperless
+      PAPERLESS_DBPASS: '${SECRET_PAPERLESS_POSTGRES_PASSWORD}'
+      PAPERLESS_DBHOST: paperless-postgresql.media.svc.cluster.local
+      PAPERLESS_DBPORT: 5432
+      PAPERLESS_DBSSLMODE: disable
+      PAPERLESS_CORS_ALLOWED_HOSTS: https://paper.${SECRET_DOMAIN}
       PAPERLESS_CONSUMER_POLLING: 300
       PAPERLESS_ADMIN_USER: '${SECRET_PAPERLESS_USERNAME}'
       PAPERLESS_ADMIN_PASSWORD: '${SECRET_PAPERLESS_PASSWORD}'
@@ -41,8 +49,6 @@ spec:
           - hosts:
               - 'paperless.${SECRET_DOMAIN}'
             secretName: 'paperless-tls'
-    redis:
-      enabled: true
 
     persistence:
       consume:
@@ -58,3 +64,14 @@ spec:
           nfs:
             server: 192.168.1.101
             path: /srv/nfs/docs
+
+    redis:
+      enabled: true
+      architecture: standalone
+    postgresql:
+      enabled: true
+      postgresqlUsername: paperless
+      postgresqlPassword: ${SECRET_PAPERLESS_POSTGRES_PASSWORD}
+      postgresqlDatabase: paperless
+      persistence:
+        enabled: true
