@@ -26,5 +26,6 @@ resources:
   - prometheus-community-charts.yaml
   - rook-ceph-charts.yaml
   - stakater-charts.yaml
+  - tika-charts.yaml
   - traefik-charts.yaml
   - weaveworks-kured-charts.yaml

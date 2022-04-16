@@ -1,0 +1,10 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: HelmRepository
+metadata:
+  name: tika-charts
+  namespace: flux-system
+spec:
+  interval: 15m
+  url: https://apache.jfrog.io/artifactory/tika
+  timeout: 3m
