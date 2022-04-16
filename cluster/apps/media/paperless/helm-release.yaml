@@ -51,19 +51,26 @@ spec:
             secretName: 'paperless-tls'
 
     persistence:
-      consume:
-        enabled: true
-        existingClaim: paperless-consume-v2
       data:
         enabled: true
-        existingClaim: paperless-config-v2
+        existingClaim: paperless-data-v1
       media:
+        enabled: true
+        existingClaim: paperless-media-v1
+      consume:
         enabled: true
         type: custom
         volumeSpec:
           nfs:
-            server: 192.168.1.101
-            path: /srv/nfs/docs
+            server: "${NAS_ADDR}"
+            path: /srv/nfs/docs/consume
+      export:
+        enabled: true
+        type: custom
+        volumeSpec:
+          nfs:
+            server: "${NAS_ADDR}"
+            path: /srv/nfs/docs/export
 
     redis:
       enabled: true

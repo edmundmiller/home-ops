@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: paperless-config-v2
+  name: paperless-data-v1
   namespace: media
 spec:
   accessModes:
@@ -10,13 +10,13 @@ spec:
   storageClassName: longhorn
   resources:
     requests:
-      storage: 1Gi
+      storage: 100Gi
 
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: paperless-consume-v2
+  name: paperless-media-v1
   namespace: media
 spec:
   accessModes:
