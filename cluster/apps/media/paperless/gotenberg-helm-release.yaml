@@ -8,10 +8,10 @@ spec:
   interval: 5m
   chart:
     spec:
-      chart: gotenburg
+      chart: gotenberg
       version: 5.0.0
       sourceRef:
         kind: HelmRepository
-        name: kur108-charts
+        name: kurt108-charts
         namespace: flux-system
       interval: 5m
