@@ -8,6 +8,7 @@ spec:
   interval: 5m
   chart:
     spec:
+      # renovate: registryUrl=https://kurt108.github.io/helm-charts
       chart: gotenberg
       version: 5.0.0
       sourceRef:
