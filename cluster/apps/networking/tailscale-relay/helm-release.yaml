@@ -19,7 +19,7 @@ spec:
   values:
     image:
       repository: docker.io/mvisonneau/tailscale
-      tag: 'v1.22.2'
+      tag: 'v1.24.0'
     config:
       variables:
         TAILSCALE_ADVERTISE_ROUTES: "${NETWORK_K8S_CLUSTER_CIDR},${NETWORK_K8S_SERVICE_CIDR}"
