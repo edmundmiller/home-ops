@@ -22,7 +22,10 @@ spec:
         cert-manager.io/cluster-issuer: 'letsencrypt-production'
         traefik.ingress.kubernetes.io/router.entrypoints: 'websecure'
       hosts:
-        - 'git.${SECRET_DOMAIN}'
+        - host: 'git.${SECRET_DOMAIN}'
+          paths:
+            - path: /
+              pathType: Prefix
       tls:
         - hosts:
             - 'git.${SECRET_DOMAIN}'
