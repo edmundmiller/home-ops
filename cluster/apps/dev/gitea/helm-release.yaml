@@ -31,7 +31,8 @@ spec:
             - 'git.${SECRET_DOMAIN}'
           secretName: 'gitea-tls'
 
-    admin:
-      username: '${SECRET_GITEA_USERNAME}'
-      password: '${SECRET_GITEA_PASSWORD}'
-      email: '${SECRET_GITEA_EMAIL}'
+    gitea:
+      admin:
+        username: '${SECRET_GITEA_USERNAME}'
+        password: '${SECRET_GITEA_PASSWORD}'
+        email: '${SECRET_GITEA_EMAIL}'
