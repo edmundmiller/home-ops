@@ -29,7 +29,7 @@ spec:
       PAPERLESS_DBHOST: paperless-postgresql.media.svc.cluster.local
       PAPERLESS_DBPORT: 5432
       PAPERLESS_DBSSLMODE: disable
-      PAPERLESS_CORS_ALLOWED_HOSTS: https://paper.${SECRET_DOMAIN}
+      PAPERLESS_CORS_ALLOWED_HOSTS: https://paperless.${SECRET_DOMAIN}
       PAPERLESS_CONSUMER_POLLING: 300
       PAPERLESS_CONSUMER_RECURSIVE: true
       PAPERLESS_TIKA_ENABLED: true
