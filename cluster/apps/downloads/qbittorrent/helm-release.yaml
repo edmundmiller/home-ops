@@ -54,7 +54,7 @@ spec:
           bittorrent:
             enabled: true
             port: ${VPN_FORWARDED_PORT_1}
-            protocol: TCP
+            protocol: UDP
             targetPort: ${VPN_FORWARDED_PORT_1}
         externalTrafficPolicy: Local
 
