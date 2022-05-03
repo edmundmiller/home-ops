@@ -30,4 +30,5 @@ resources:
   - stakater-charts.yaml
   - tika-charts.yaml
   - traefik-charts.yaml
+  - trino-charts.yaml
   - weaveworks-kured-charts.yaml
