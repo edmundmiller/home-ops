@@ -1,0 +1,17 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: trino
+  namespace: dev
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: trino
+      version: 0.7.0
+      sourceRef:
+        kind: HelmRepository
+        name: trino-charts
+        namespace: flux-system
+      interval: 5m
