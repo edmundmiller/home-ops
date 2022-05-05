@@ -8,12 +8,12 @@ metadata:
     app.kubernetes.io/name: *app
     app.kubernetes.io/instance: *app
   annotations:
-    external-dns.alpha.kubernetes.io/target: "ipv4.${SECRET_PUBLIC_DOMAIN}"
+    external-dns.alpha.kubernetes.io/target: "ipv4.${SECRET_DOMAIN}"
     external-dns/is-public: "true"
 spec:
   ingressClassName: nginx
   rules:
-    - host: &host "theme-park.${SECRET_PUBLIC_DOMAIN}"
+    - host: &host "theme-park.${SECRET_DOMAIN}"
       http:
         paths:
           - backend:
