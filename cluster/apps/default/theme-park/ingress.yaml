@@ -8,12 +8,12 @@ metadata:
     app.kubernetes.io/name: *app
     app.kubernetes.io/instance: *app
   annotations:
-    external-dns.alpha.kubernetes.io/target: "ipv4.${SECRET_DOMAIN}"
-    external-dns/is-public: "true"
+    cert-manager.io/cluster-issuer: 'letsencrypt-production'
+    traefik.ingress.kubernetes.io/router.entrypoints: 'websecure'
 spec:
-  ingressClassName: nginx
+  ingressClassName: 'traefik'
   rules:
-    - host: &host "theme-park.${SECRET_DOMAIN}"
+    - host: &host 'theme-park.${SECRET_DOMAIN}'
       http:
         paths:
           - backend:
