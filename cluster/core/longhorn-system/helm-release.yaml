@@ -24,7 +24,9 @@ spec:
       reclaimPolicy: Retain
       recurringJobs:
         enable: true
-        jobList: '[{"name":"daily", "task":"backup", "cron":"0 6 * * ?", "retain":2,"labels": {"interval":"daily"}}]'
+        jobList:
+          - '[{"name":"daily", "task":"snapshot", "cron":"0 6 * * ?", "retain":2,"labels": {"interval":"daily"}}]'
+          - '[{"name":"weekly", "task":"backup", "cron":"0 8 ? * SUN", "retain":1,"labels": {"interval":"weekly"}}]'
 
     defaultSettings:
       backupTarget: 's3://${SECRET_LONGHORN_BUCKET}@us-west-001/'
