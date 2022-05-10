@@ -8,6 +8,7 @@ spec:
   interval: 5m
   chart:
     spec:
+      # renovate: registryUrl=https://trinodb.github.io/charts/
       chart: trino
       version: 0.7.0
       sourceRef:
