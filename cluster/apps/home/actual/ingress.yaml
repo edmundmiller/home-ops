@@ -24,3 +24,4 @@ spec:
   tls:
     - hosts:
         - 'actual.${SECRET_DOMAIN}'
+      secretName: 'actual-tls'
