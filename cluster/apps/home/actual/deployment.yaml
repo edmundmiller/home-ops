@@ -1,0 +1,34 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: actual
+  namespace: home
+  labels:
+    app: actual
+spec:
+  strategy:
+    type: Recreate
+  replicas: 1
+  selector:
+    matchLabels:
+      app: actual
+  template:
+    metadata:
+      labels:
+        app: actual
+    spec:
+      containers:
+        - name: actual
+          image: erulabs/actual-server:efd273b
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 5006
+          volumeMounts:
+            - mountPath: /app/user-files
+              name: actual-data
+      volumes:
+        - name: actual-data
+          persistentVolumeClaim:
+            claimName: actual-data
