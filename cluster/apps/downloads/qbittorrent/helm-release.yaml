@@ -17,17 +17,6 @@ spec:
         namespace: flux-system
       interval: 5m
   values:
-    initContainers:
-      config-permission-fix:
-        image: busybox
-        command: ['/bin/chown', '-R', '568:568', '/config']
-        volumeMounts:
-          - name: config
-            mountPath: /config
-        securityContext:
-          runAsGroup: 0
-          runAsNonRoot: false
-          runAsUser: 0
 
     image:
       repository: ghcr.io/k8s-at-home/qbittorrent
@@ -35,10 +24,12 @@ spec:
 
     env:
       TZ: '${TIMEZONE}'
-      logLevel: DEBUG
 
     podAnnotations:
       setGateway: 'true'
+
+    settings:
+      automaticPortSetup: false
 
     service:
       main:
