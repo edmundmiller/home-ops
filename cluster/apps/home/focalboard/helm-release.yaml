@@ -10,38 +10,35 @@ spec:
     spec:
       # renovate: registryUrl=https://k8s-at-home.com/charts/
       chart: focalboard
-      version: 4.3.2
+      version: 0.5.0
       sourceRef:
         kind: HelmRepository
-        name: k8s-at-home-charts
+        name: mattermost
         namespace: flux-system
       interval: 5m
   values:
     image:
       repository: mattermost/focalboard
-      tag: 0.16.0
+      tag: 0.9.0
 
     env:
       TZ: '${TIMEZONE}'
 
     ingress:
-      main:
-        enabled: true
-        ingressClassName: 'traefik'
-        annotations:
-          cert-manager.io/cluster-issuer: 'letsencrypt-production'
-          traefik.ingress.kubernetes.io/router.entrypoints: 'websecure'
-        hosts:
-          - host: 'focal.${SECRET_DOMAIN}'
-            paths:
-              - path: /
-                pathType: Prefix
-        tls:
-          - hosts:
-              - 'focal.${SECRET_DOMAIN}'
-            secretName: 'focalboard-tls'
+      enabled: true
+      ingressClassName: 'traefik'
+      annotations:
+        cert-manager.io/cluster-issuer: 'letsencrypt-production'
+        traefik.ingress.kubernetes.io/router.entrypoints: 'websecure'
+      hosts:
+        - host: 'focal.${SECRET_DOMAIN}'
+          paths:
+            - path: /
+              pathType: Prefix
+      tls:
+        - hosts:
+            - 'focal.${SECRET_DOMAIN}'
+          secretName: 'focalboard-tls'
 
     persistence:
-      config:
-        enabled: true
-        existingClaim: focalboard-config-v1
+      enabled: true
