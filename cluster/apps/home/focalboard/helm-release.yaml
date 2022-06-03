@@ -19,7 +19,7 @@ spec:
   values:
     image:
       repository: mattermost/focalboard
-      tag: 0.9.0
+      tag: 7.0.0
 
     env:
       TZ: '${TIMEZONE}'
