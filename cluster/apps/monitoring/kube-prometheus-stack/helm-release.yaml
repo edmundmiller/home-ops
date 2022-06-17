@@ -18,8 +18,7 @@ spec:
       interval: 5m
   timeout: 20m
   values:
-    prometheusOperator:
-      createCustomResource: false
+    fullnameOverride: prometheus
     alertmanager:
       config:
         global:
