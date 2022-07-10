@@ -1,0 +1,27 @@
+---
+version: "3"
+
+tasks:
+
+  encrypt:
+    desc: encrypt sops file 'to use must include -- before path to file.' eg "task sops:encrypt -- file.yml"
+    cmds:
+      - sops --encrypt --in-place {{.CLI_ARGS}}
+
+  decrypt:
+    desc: decrypt sops file 'to use must include -- before path to file.'  eg "task sops:decrypt -- file.yml"
+    cmds:
+      - sops --decrypt --in-place {{.CLI_ARGS}}
+
+  all:decrypt:
+    desc: Decrypt all secret files
+    cmds:
+      - find ./cluster -type f -iname "*sops*" -exec sops --decrypt --in-place {} \;
+      - find ./provision -type f -iname "*sops*" -exec sops --decrypt --in-place {} \;
+    silent: true
+  all:encrypt:
+    desc: encrypt all secret files
+    cmds:
+      - find ./cluster -type f -iname "*sops*" -exec sops --encrypt --in-place {} \;
+      - find ./provision -type f -iname "*sops*" -exec sops --encrypt --in-place {} \;
+    silent: true
