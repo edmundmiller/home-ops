@@ -5,5 +5,4 @@ resources:
   - namespaces
   - kube-system
   - longhorn-system
-  - metallb-system
   - system-upgrade
