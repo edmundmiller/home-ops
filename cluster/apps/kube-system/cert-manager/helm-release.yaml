@@ -3,32 +3,35 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: cert-manager
-  namespace: cert-manager
+  namespace: kube-system
 spec:
-  interval: 5m
+  interval: 15m
   chart:
     spec:
-      # renovate: registryUrl=https://charts.jetstack.io/
       chart: cert-manager
       version: v1.8.2
       sourceRef:
         kind: HelmRepository
         name: jetstack-charts
         namespace: flux-system
+      interval: 15m
   install:
-    crds: CreateReplace
+    createNamespace: true
+    remediation:
+      retries: 5
   upgrade:
-    crds: CreateReplace
+    remediation:
+      retries: 5
   values:
-    installCRDs: true
+    installCRDs: false
     webhook:
       enabled: true
     extraArgs:
       - --dns01-recursive-nameservers=1.1.1.1:53,9.9.9.9:53
       - --dns01-recursive-nameservers-only
     replicaCount: 1
-    podDnsPolicy: 'None'
+    podDnsPolicy: "None"
     podDnsConfig:
       nameservers:
-        - '1.1.1.1'
-        - '9.9.9.9'
+        - "1.1.1.1"
+        - "9.9.9.9"
