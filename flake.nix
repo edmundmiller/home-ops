@@ -12,14 +12,17 @@
           # Terraform
           terraform
           jq
+          yq
           # Ansible
           ansible
           ipcalc
           # Dev tools
           age
+          envsubst
           pre-commit
           go # gitleaksbs
           sops
+          tflint
           go-task
           k9s
         ];
