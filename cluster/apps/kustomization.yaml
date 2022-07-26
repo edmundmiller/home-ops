@@ -5,8 +5,8 @@ resources:
   - default
   - dev
   - downloads
-  - home
   - flux-system
+  - home
   - kube-system
   - media
   - monitoring
