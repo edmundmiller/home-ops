@@ -130,10 +130,9 @@ spec:
       - grafana-clock-panel
     ingress:
       enabled: true
-      ingressClassName: 'traefik'
+      ingressClassName: 'nginx'
       annotations:
         cert-manager.io/cluster-issuer: 'letsencrypt-production'
-        traefik.ingress.kubernetes.io/router.entrypoints: 'websecure'
       hosts:
         - 'grafana.${SECRET_DOMAIN}'
       tls:
