@@ -13,6 +13,6 @@ spec:
       version: 5.0.0
       sourceRef:
         kind: HelmRepository
-        name: kurt108-charts
+        name: kurt108
         namespace: flux-system
       interval: 5m

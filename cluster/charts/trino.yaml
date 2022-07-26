@@ -1,0 +1,10 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: HelmRepository
+metadata:
+  name: trino
+  namespace: flux-system
+spec:
+  interval: 15m
+  url: https://trinodb.github.io/charts/
+  timeout: 3m

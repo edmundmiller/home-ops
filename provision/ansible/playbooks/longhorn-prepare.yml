@@ -53,5 +53,5 @@
             path: /data
             owner: kah
             group: kah
-            recurse: yes
+            recurse: true
             # mode: '1777'

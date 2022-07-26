@@ -13,7 +13,7 @@ spec:
       version: 1.2.0
       sourceRef:
         kind: HelmRepository
-        name: jupyterhub-charts
+        name: jupyterhub
         namespace: flux-system
       interval: 5m
   values:

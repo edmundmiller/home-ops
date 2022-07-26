@@ -13,6 +13,6 @@ spec:
       version: 0.8.0
       sourceRef:
         kind: HelmRepository
-        name: trino-charts
+        name: trino
         namespace: flux-system
       interval: 5m

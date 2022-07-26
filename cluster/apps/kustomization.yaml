@@ -6,6 +6,7 @@ resources:
   - dev
   - downloads
   - home
+  - flux-system
   - kube-system
   - media
   - monitoring

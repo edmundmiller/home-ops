@@ -9,10 +9,10 @@ spec:
   chart:
     spec:
       chart: cert-manager
-      version: v1.8.2
+      version: v1.9.0
       sourceRef:
         kind: HelmRepository
-        name: jetstack-charts
+        name: jetstack
         namespace: flux-system
       interval: 15m
   install:
