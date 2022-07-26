@@ -12,7 +12,7 @@
           # Terraform
           terraform
           jq
-          yq
+          yq-go
           # Ansible
           ansible
           ipcalc
