@@ -25,10 +25,10 @@
         group: kah
 
     - name: Ensure nfs and open-iscsi
-      apt:
+      dnf:
         pkg:
-          - open-iscsi
-          - nfs-common
+          - iscsi-initiator-utils
+          - nfs-utils
 
     - name: Setup storage disks
       block:
@@ -38,14 +38,10 @@
             number: 1
             state: present
             fs_type: ext4
-        - name: Create a ext4 filesystem on /dev/nvme0n1
-          filesystem:
-            fstype: ext4
-            dev: /dev/nvme0n1
         - name: Mount Disk to /data
           mount:
             path: /data
-            src: /dev/nvme0n1p1
+            src: /dev/nvme0n1
             fstype: ext4
             state: mounted
         - name: Give kah ownership
