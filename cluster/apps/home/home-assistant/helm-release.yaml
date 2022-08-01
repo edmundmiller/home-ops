@@ -88,8 +88,6 @@ spec:
         mountPath: /config/backups
         readOnly: false
 
-    podAnnotations:
-      secret.reloader.stakater.com/reload: *app
     addons:
       codeserver:
         enabled: true
@@ -110,7 +108,7 @@ spec:
           enabled: true
           ingressClassName: "nginx"
           hosts:
-            - host: &host "hass-code.${SECRET_PUBLIC_DOMAIN}"
+            - host: &host "hass-code.${SECRET_DOMAIN}"
               paths:
                 - path: /
                   pathType: Prefix
