@@ -37,19 +37,6 @@ spec:
           - hosts:
               - 'sonarr.${SECRET_DOMAIN}'
             secretName: 'sonarr-tls'
-      api:
-        enabled: true
-        ingressClassName: "nginx"
-        annotations:
-        hosts:
-          - host: "sonarr.${SECRET_DOMAIN}"
-            paths:
-              - path: /api
-                pathType: Prefix
-        tls:
-          - hosts:
-              - "sonarr.${SECRET_DOMAIN}"
-            secretName: 'sonarr-tls'
 
     podSecurityContext:
       fsGroup: 0
