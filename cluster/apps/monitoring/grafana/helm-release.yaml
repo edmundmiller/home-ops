@@ -20,6 +20,7 @@ spec:
     grafana.ini:
       server:
         root_url: 'https://grafana.${SECRET_DOMAIN}'
+    adminPassword: '${SECRET_GRAFANA_PASSWORD}'
     ingress:
       enabled: true
       annotations:
