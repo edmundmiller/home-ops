@@ -33,6 +33,10 @@ spec:
           gnetId: 7845
           revision: 4
           datasource: Prometheus
+        longhorn:
+          datasource: Prometheus
+          gnetId: 13032
+          revision: 6
     ingress:
       enabled: true
       annotations:
