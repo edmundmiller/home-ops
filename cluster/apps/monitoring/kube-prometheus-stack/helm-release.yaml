@@ -18,10 +18,6 @@ spec:
       interval: 5m
   timeout: 20m
   values:
-    grafana:
-      enabled: false
-      forceDeployDashboards: true
-
     alertmanager:
       enabled: true
       alertmanagerSpec:
@@ -33,11 +29,42 @@ spec:
               resources:
                 requests:
                   storage: 4Gi
-
-    kubeStateMetrics:
+    grafana:
+      enabled: false
+      forceDeployDashboards: true
+      sidecar:
+        dashboards:
+          multicluster:
+            etcd:
+              enabled: true
+    kubelet:
       enabled: true
-    kube-state-metrics:
-      fullnameOverride: kube-state-metrics
+      serviceMonitor:
+        metricRelabelings:
+          - action: replace
+            sourceLabels:
+              - node
+            targetLabel: instance
+    kubeApiServer:
+      enabled: true
+    kubeControllerManager:
+      enabled: true
+      endpoints: &nodes
+        - 192.168.1.120
+        - 192.168.1.130
+    kubeScheduler:
+      enabled: true
+      endpoints: *nodes
+    kubeProxy:
+      enabled: true
+      endpoints: *nodes
+    kubeEtcd:
+      enabled: true
+      endpoints: *nodes
+      service:
+        enabled: true
+        port: 2381
+        targetPort: 2381
 
     nodeExporter:
       enabled: true
@@ -48,7 +75,15 @@ spec:
       enabled: true
 
     prometheus:
-      enabled: true
+      ingress:
+        enabled: true
+        pathType: Prefix
+        ingressClassName: "nginx"
+        hosts:
+          - &host "prometheus.${SECRET_DOMAIN}"
+        tls:
+          - hosts:
+              - *host
       prometheusSpec:
         retention: 90d
         shards: null
@@ -67,24 +102,7 @@ spec:
             spec:
               accessModes:
                 - ReadWriteOnce
+              storageClassName: "longhorn"
               resources:
                 requests:
-                  storage: 100Gi
-        # additionalScrapeConfigs:
-        # - job_name: "node"
-        #   static_config:
-        #   - targets: ["${OPNSENSE_ADDRESS}:9100"]
-
-    # scrapers
-    kubelet:
-      enabled: true
-    kubeApiServer:
-      enabled: true
-    kubeControllerManager:
-      enabled: true
-    kubeScheduler:
-      enabled: false
-    kubeProxy:
-      enabled: false
-    kubeEtcd:
-      enabled: false
+                  storage: 10Gi
