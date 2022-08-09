@@ -45,6 +45,19 @@ spec:
       dashboards:
         enabled: true
         searchNamespace: ALL
+    datasources:
+      datasources.yaml:
+        apiVersion: 1
+        # list of datasources that should be deleted from the database
+        deleteDatasources:
+          - name: Loki
+            orgId: 1
+        datasources:
+          - name: Prometheus
+            type: prometheus
+            access: proxy
+            url: http://thanos-query:9090/
+            isDefault: true
     ingress:
       enabled: true
       annotations:
