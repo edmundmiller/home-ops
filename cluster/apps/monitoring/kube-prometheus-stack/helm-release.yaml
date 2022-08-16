@@ -50,8 +50,8 @@ spec:
     kubeControllerManager:
       enabled: true
       endpoints: &nodes
-        - 192.168.1.120
-        - 192.168.1.130
+        - 192.168.42.10
+        - 192.168.42.13
     kubeScheduler:
       enabled: true
       endpoints: *nodes
