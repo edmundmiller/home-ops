@@ -8,5 +8,4 @@ resources:
   - node-feature-discovery
   # - kured
   - metrics-server
-  - reflector
   - reloader
