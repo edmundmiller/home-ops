@@ -32,9 +32,10 @@ spec:
       LIDARR__INSTANCE_NAME: Lidarr
       LIDARR__PORT: &port 80
       LIDARR__LOG_LEVEL: info
-    envFrom:
-      - secretRef:
-          name: *app
+    # TODO
+    # envFrom:
+    #   - secretRef:
+    #       name: *app
     service:
       main:
         ports:

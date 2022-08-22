@@ -32,9 +32,10 @@ spec:
       PROWLARR__INSTANCE_NAME: Prowlarr
       PROWLARR__PORT: &port 80
       PROWLARR__LOG_LEVEL: info
-    envFrom:
-      - secretRef:
-          name: *app
+    # TODO
+    # envFrom:
+    #   - secretRef:
+    #       name: *app
     service:
       main:
         ports:
