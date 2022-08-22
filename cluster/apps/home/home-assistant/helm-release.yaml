@@ -8,34 +8,23 @@ spec:
   interval: 15m
   chart:
     spec:
-      # renovate: registryUrl=https://k8s-at-home.com/charts/
-      chart: home-assistant
-      version: 13.4.2
+      chart: app-template
+      version: 0.1.0
       sourceRef:
         kind: HelmRepository
-        name: k8s-at-home
+        name: bjw-s
         namespace: flux-system
-      interval: 15m
-  install:
-    createNamespace: true
-    remediation:
-      retries: 5
-  upgrade:
-    remediation:
-      retries: 5
   values:
     global:
       nameOverride: *app
     image:
-      repository: ghcr.io/home-assistant/home-assistant
-      tag: 2022.8.6
+      repository: ghcr.io/onedr0p/home-assistant
+      tag: 2022.8.2@sha256:d5d196e79f0216648d637f905f133a9956305f431fa280c4fe84a7043d538643
     env:
       TZ: "${TIMEZONE}"
-      PYTHONUSERBASE: /config/deps
-    # FIXME
-    # envFrom:
-    #   - secretRef:
-    #       name: *app
+    envFrom:
+      - secretRef:
+          name: *app
     service:
       main:
         type: LoadBalancer
@@ -50,9 +39,7 @@ spec:
         enabled: true
         ingressClassName: "nginx"
         annotations:
-          cert-manager.io/cluster-issuer: "letsencrypt-production"
-          hajimari.io/enable: "true"
-          hajimari.io/icon: "home-automation"
+          external-dns.home.arpa/enabled: "true"
         hosts:
           - host: &host "hass.${SECRET_DOMAIN}"
             paths:
@@ -78,17 +65,9 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: home-assistant-config-v2
-      backup:
-        enabled: true
-        type: custom
-        volumeSpec:
-          nfs:
-            server: '${NAS_ADDR}'
-            path: /srv/nfs/backup/app/hass/
-        mountPath: /config/backups
-        readOnly: false
-
+        existingClaim: home-assistant-config-v1
+    podAnnotations:
+      secret.reloader.stakater.com/reload: *app
     addons:
       codeserver:
         enabled: true

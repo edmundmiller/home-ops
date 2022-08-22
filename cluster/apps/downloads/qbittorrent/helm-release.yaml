@@ -2,92 +2,75 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: qbittorrent
+  name: &app qbittorrent
   namespace: downloads
 spec:
-  interval: 5m
+  interval: 15m
   chart:
     spec:
-      # renovate: registryUrl=https://k8s-at-home.com/charts/
-      chart: qbittorrent
-      version: 13.5.2
+      chart: app-template
+      version: 0.1.0
       sourceRef:
         kind: HelmRepository
-        name: k8s-at-home
+        name: bjw-s
         namespace: flux-system
-      interval: 5m
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
   values:
-    initContainers:
-      config-permission-fix:
-        image: busybox
-        command: ['/bin/chown', '-R', '568:568', '/config']
-        volumeMounts:
-          - name: config
-            mountPath: /config
-        securityContext:
-          runAsGroup: 0
-          runAsNonRoot: false
-          runAsUser: 0
-
+    global:
+      nameOverride: *app
     image:
-      repository: ghcr.io/k8s-at-home/qbittorrent
-      tag: v4.4.2
-
+      repository: ghcr.io/onedr0p/qbittorrent
+      tag: 4.4.3.1@sha256:e74c1817b272395ec1df2347d376d67b9e4d11e426bccf849d1f275f7e7931d5
     env:
-      TZ: '${TIMEZONE}'
-
-    podAnnotations:
-      setGateway: 'true'
-
-    settings:
-      automaticPortSetup: false
-
+      TZ: "${TIMEZONE}"
+      QBITTORRENT__PORT: &port 80
+      QBITTORRENT__BT_PORT: &port-bt 50413
     service:
       main:
         ports:
           http:
-            port: 8080
+            port: *port
       bittorrent:
         enabled: true
         type: LoadBalancer
         externalIPs:
-          - '${SVC_QBITTORRENT_ADDRESS}'
+          - "${SVC_QBITTORRENT_ADDR}"
         ports:
           bittorrent:
             enabled: true
-            port: ${VPN_FORWARDED_PORT_1}
-            protocol: UDP
-            targetPort: ${VPN_FORWARDED_PORT_1}
+            port: *port-bt
+            protocol: TCP
+            targetPort: *port-bt
         externalTrafficPolicy: Local
-
     ingress:
       main:
         enabled: true
-        ingressClassName: 'nginx'
-        annotations:
-          cert-manager.io/cluster-issuer: 'letsencrypt-production'
-          hajimari.io/enable: 'true'
-          hajimari.io/icon: 'cloud-download'
+        ingressClassName: "nginx"
         hosts:
-          - host: 'qb.${SECRET_DOMAIN}'
+          - host: &host "qb.${SECRET_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
         tls:
           - hosts:
-              - 'qb.${SECRET_DOMAIN}'
-            secretName: 'qbittorrent-tls'
-
+              - *host
     podSecurityContext:
       runAsUser: 568
       runAsGroup: 568
       fsGroup: 568
-      fsGroupChangePolicy: OnRootMismatch
-
+      fsGroupChangePolicy: "OnRootMismatch"
+      supplementalGroups:
+        - 100
     persistence:
       config:
         enabled: true
-        existingClaim: qbittorrent-config-v2
+        existingClaim: qbittorrent-config-v1
       media:
         enabled: true
         type: custom
@@ -96,18 +79,9 @@ spec:
             server: '${NAS_ADDR}'
             path: /srv/nfs
         mountPath: /media
-
     resources:
       requests:
+        cpu: 10m
         memory: 250Mi
-        cpu: 500m
       limits:
         memory: 6000Mi
-    # HACK
-    probes:
-      liveness:
-        enabled: false
-      readiness:
-        enabled: false
-      startup:
-        enabled: false

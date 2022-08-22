@@ -2,81 +2,59 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: zigbee2mqtt
+  name: &app zigbee2mqtt
   namespace: home
 spec:
-  interval: 5m
+  interval: 15m
   chart:
     spec:
-      # renovate: registryUrl=https://k8s-at-home.com/charts/
-      chart: zigbee2mqtt
-      version: 9.4.2
+      chart: app-template
+      version: 0.1.0
       sourceRef:
         kind: HelmRepository
-        name: k8s-at-home
+        name: bjw-s
         namespace: flux-system
-      interval: 5m
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
   values:
+    global:
+      nameOverride: *app
     image:
       repository: ghcr.io/koenkk/zigbee2mqtt
-      tag: latest-dev
+      tag: 1.27.0
     env:
-      TZ: '${TIMEZONE}'
+      TZ: "${TIMEZONE}"
       ZIGBEE2MQTT_DATA: /data
+    service:
+      main:
+        ports:
+          http:
+            port: 8080
     ingress:
       main:
         enabled: true
-        ingressClassName: 'nginx'
-        annotations:
-          cert-manager.io/cluster-issuer: 'letsencrypt-production'
+        ingressClassName: "nginx"
         hosts:
-          - host: 'zigbee2mqtt.${SECRET_DOMAIN}'
+          - host: &host "{{ .Release.Name }}.${SECRET_PUBLIC_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
         tls:
           - hosts:
-              - 'zigbee2mqtt.${SECRET_DOMAIN}'
-            secretName: 'zigbee2mqtt-tls'
-
+              - *host
     persistence:
       config:
         enabled: true
-        existingClaim: zigbee2mqtt-config-v2
-        mountPath: '/data'
-    config:
-      homeassistant: true
-      device_options:
-        retain: true
-      permit_join: false
-      mqtt:
-        base_topic: zigbee2mqtt
-        server: 'mqtt://mosquitto'
-        user: '${SECRET_MQTT_USERNAME}'
-        password: '${SECRET_MQTT_PASSWORD}'
-      serial:
-        port: 'tcp://192.168.22.100:6638'
-      advanced:
-        log_output:
-          - console
-        network_key:
-          - 204
-          - 61
-          - 75
-          - 23
-          - 44
-          - 230
-          - 24
-          - 203
-          - 53
-          - 5
-          - 248
-          - 32
-          - 50
-          - 84
-          - 44
-          - 159
-      frontend:
-        port: 8080
-      experimental:
-        new_api: true
+        existingClaim: zigbee2mqtt-config-v1
+        mountPath: "/data"
+    resources:
+      requests:
+        cpu: 10m
+        memory: 100Mi
+      limits:
+        memory: 500Mi

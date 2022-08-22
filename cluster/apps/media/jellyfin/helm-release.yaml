@@ -2,62 +2,74 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: jellyfin
+  name: &app jellyfin
   namespace: media
 spec:
-  interval: 5m
+  interval: 15m
   chart:
     spec:
-      # renovate: registryUrl=https://k8s-at-home.com/charts/
-      chart: jellyfin
-      version: 9.5.3
+      chart: app-template
+      version: 0.1.0
       sourceRef:
         kind: HelmRepository
-        name: k8s-at-home
+        name: bjw-s
         namespace: flux-system
-      interval: 5m
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
+  dependsOn:
+    - name: intel-gpu-plugin
+      namespace: kube-system
+    - name: node-feature-discovery
+      namespace: kube-system
   values:
+    global:
+      nameOverride: *app
     image:
-      repository: ghcr.io/k8s-at-home/jellyfin
-      tag: v10.8.4
+      repository: lscr.io/linuxserver/jellyfin
+      tag: latest
     env:
-      TZ: '${TIMEZONE}'
-      JELLYFIN_CACHE_DIR: "/config/cache"
-
-    podSecurityContext:
-      supplementalGroups:
-        - 44
-        - 109
-        - 100
-
+      TZ: "${TIMEZONE}"
     service:
       main:
         type: LoadBalancer
         externalIPs:
           - "${SVC_JELLYFIN_ADDR}"
         externalTrafficPolicy: Local
-
+        ports:
+          http:
+            port: 32400
     ingress:
       main:
         enabled: true
-        ingressClassName: 'nginx'
+        ingressClassName: "nginx"
         annotations:
-          cert-manager.io/cluster-issuer: 'letsencrypt-production'
-          hajimari.io/enable: 'true'
-          hajimari.io/icon: 'television-classic'
+          nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
         hosts:
-          - host: 'jellyfin.${SECRET_DOMAIN}'
+          - host: &host "{{ .Release.Name }}.${SECRET_PUBLIC_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
         tls:
           - hosts:
-              - 'jellyfin.${SECRET_DOMAIN}'
-            secretName: 'jellyfin-tls'
+              - *host
+    podSecurityContext:
+      runAsUser: 568
+      runAsGroup: 568
+      fsGroup: 568
+      fsGroupChangePolicy: "OnRootMismatch"
+      supplementalGroups:
+        - 44
+        - 109
+        - 100
     persistence:
       config:
         enabled: true
-        existingClaim: jellyfin-config-v2
+        existingClaim: jellyfin-config-v1
       media:
         enabled: true
         type: custom
@@ -79,12 +91,12 @@ spec:
                 - key: feature.node.kubernetes.io/custom-intel-gpu
                   operator: In
                   values:
-                    - 'true'
+                    - "true"
     resources:
       requests:
         gpu.intel.com/i915: 1
-        cpu: 1000m
-        memory: 1000Mi
+        cpu: 100m
+        memory: 2000Mi
       limits:
         gpu.intel.com/i915: 1
-        memory: 16000Mi
+        memory: 10000Mi
