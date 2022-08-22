@@ -9,52 +9,108 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 0.1.0
+      version: 0.1.1
+      interval: 15m
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-  install:
-    createNamespace: true
-    remediation:
-      retries: 5
-  upgrade:
-    remediation:
-      retries: 5
+
   values:
-    global:
-      nameOverride: *app
     image:
-      repository: ghcr.io/koenkk/zigbee2mqtt
+      repository: docker.io/koenkk/zigbee2mqtt
       tag: 1.27.0
+
+    config:
+      mqtt:
+        base_topic: zigbee2mqtt
+        server: "mqtt://mosquitto.home"
+        # user: set by valuesFrom
+        # password: set by valuesFrom
+
+      homeassistant: true
+
+      device_options:
+        retain: true
+
+      permit_join: false
+
+      # serial:
+      #   port: set by valuesFrom (tcp://<ip>:6638)
+
+      advanced:
+        log_output:
+          - console
+        network_key:
+          - 95
+          - 127
+          - 73
+          - 119
+          - 59
+          - 169
+          - 49
+          - 50
+          - 96
+          - 72
+          - 42
+          - 246
+          - 182
+          - 104
+          - 11
+          - 41
+        pan_id: 6752
+
+      # Both of these need to be enabled for the webui
+      frontend:
+        port: 8080
+
     env:
-      TZ: "${TIMEZONE}"
       ZIGBEE2MQTT_DATA: /data
+
     service:
       main:
         ports:
           http:
             port: 8080
+
     ingress:
       main:
         enabled: true
         ingressClassName: "nginx"
         hosts:
-          - host: &host "{{ .Release.Name }}.${SECRET_PUBLIC_DOMAIN}"
+          - host: &host "zigbee2mqtt.${SECRET_DOMAIN}"
             paths:
               - path: /
-                pathType: Prefix
         tls:
           - hosts:
               - *host
+
     persistence:
-      config:
+      data:
         enabled: true
-        existingClaim: zigbee2mqtt-config-v1
         mountPath: "/data"
+        existingClaim: zigbee2mqtt-data
+
     resources:
       requests:
-        cpu: 10m
-        memory: 100Mi
+        cpu: 15m
+        memory: 127M
       limits:
-        memory: 500Mi
+        memory: 1364M
+
+  valuesFrom:
+    - kind: Secret
+      name: zigbee2mqtt
+      valuesKey: mqtt_user
+      targetPath: config.mqtt.user
+      optional: false
+    - kind: Secret
+      name: zigbee2mqtt
+      valuesKey: mqtt_password
+      targetPath: config.mqtt.password
+      optional: false
+    - kind: Secret
+      name: zigbee2mqtt
+      valuesKey: zigbee_adapter_port
+      targetPath: config.serial.port
+      optional: false
