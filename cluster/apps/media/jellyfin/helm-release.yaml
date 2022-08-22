@@ -5,58 +5,26 @@ metadata:
   name: &app jellyfin
   namespace: media
 spec:
-  interval: 15m
   chart:
     spec:
       chart: app-template
-      version: 0.1.0
+      version: 0.1.1
+      interval: 15m
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-  install:
-    createNamespace: true
-    remediation:
-      retries: 5
-  upgrade:
-    remediation:
-      retries: 5
+  interval: 15m
   dependsOn:
     - name: intel-gpu-plugin
       namespace: kube-system
     - name: node-feature-discovery
       namespace: kube-system
   values:
-    global:
-      nameOverride: *app
     image:
-      repository: lscr.io/linuxserver/jellyfin
-      tag: latest
-    env:
-      TZ: "${TIMEZONE}"
-    service:
-      main:
-        type: LoadBalancer
-        externalIPs:
-          - "${SVC_JELLYFIN_ADDR}"
-        externalTrafficPolicy: Local
-        ports:
-          http:
-            port: 32400
-    ingress:
-      main:
-        enabled: true
-        ingressClassName: "nginx"
-        annotations:
-          nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-        hosts:
-          - host: &host "{{ .Release.Name }}.${SECRET_PUBLIC_DOMAIN}"
-            paths:
-              - path: /
-                pathType: Prefix
-        tls:
-          - hosts:
-              - *host
+      repository: ghcr.io/onedr0p/jellyfin
+      tag: 10.8.4@sha256:5e466072fcdc9e4ec61539018eb85f4c91cf4a55d5c29c4412b9d1d7c3fce394
+
     podSecurityContext:
       runAsUser: 568
       runAsGroup: 568
@@ -65,24 +33,8 @@ spec:
       supplementalGroups:
         - 44
         - 109
-        - 100
-    persistence:
-      config:
-        enabled: true
-        existingClaim: jellyfin-config-v1
-      media:
-        enabled: true
-        type: custom
-        volumeSpec:
-          nfs:
-            server: '${NAS_ADDR}'
-            path: /srv/nfs
-        mountPath: /media
-        readOnly: true
-      transcode:
-        enabled: true
-        type: emptyDir
-        medium: Memory
+        - 65539
+
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
@@ -92,11 +44,56 @@ spec:
                   operator: In
                   values:
                     - "true"
+
+    dnsConfig:
+      options:
+        - name: ndots
+          value: "1"
+
+    env:
+      DOTNET_SYSTEM_IO_DISABLEFILELOCKING: "true"
+
+    service:
+      main:
+        type: LoadBalancer
+        externalTrafficPolicy: Local
+        loadBalancerIP: "${SVC_JELLYFIN_ADDR}"
+        ports:
+          http:
+            port: 8096
+
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: nginx
+        hosts:
+          - host: &host "jellyfin.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - *host
+
+    persistence:
+      config:
+        enabled: true
+        existingClaim: jellyfin-config-v1
+      nfs-nas-media:
+        enabled: true
+        mountPath: /storage/media
+        server: '${NAS_ADDR}'
+        path: /srv/nfs
+        type: nfs
+      transcode:
+        enabled: true
+        type: emptyDir
+
     resources:
       requests:
-        gpu.intel.com/i915: 1
         cpu: 100m
-        memory: 2000Mi
+        gpu.intel.com/i915: 1
+        memory: 4282M
       limits:
         gpu.intel.com/i915: 1
-        memory: 10000Mi
+        memory: 12G
