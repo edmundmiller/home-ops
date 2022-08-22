@@ -11,6 +11,7 @@ resources:
   - ingress-nginx.yaml
   - jetstack.yaml
   - jupyterhub.yaml
+  - k8s-at-home.yaml
   - k8s-gateway.yaml
   - kurt108.yaml
   - longhorn.yaml
