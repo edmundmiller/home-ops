@@ -9,81 +9,102 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 0.1.0
+      version: 0.1.1
+      interval: 15m
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-  install:
-    createNamespace: true
-    remediation:
-      retries: 5
-  upgrade:
-    remediation:
-      retries: 5
+
   values:
-    global:
-      nameOverride: *app
     image:
       repository: ghcr.io/onedr0p/qbittorrent
-      tag: 4.4.3.1@sha256:e74c1817b272395ec1df2347d376d67b9e4d11e426bccf849d1f275f7e7931d5
+      tag: 4.4.3.1@sha256:3900157743dbe4130fec2bfd07269b0d0c11cfd671c1a83965cda47bd5cec9fa
+
     podAnnotations:
-      setGateway: 'true'
-    env:
-      TZ: "${TIMEZONE}"
-      QBITTORRENT__PORT: &port 80
-      QBITTORRENT__BT_PORT: &port-bt ${VPN_FORWARDED_PORT_1}
-    service:
-      main:
-        ports:
-          http:
-            port: *port
-      bittorrent:
-        enabled: true
-        type: LoadBalancer
-        externalIPs:
-          - "${SVC_QBITTORRENT_ADDR}"
-        ports:
-          bittorrent:
-            enabled: true
-            port: *port-bt
-            protocol: UDP
-            targetPort: *port-bt
-        externalTrafficPolicy: Local
-    ingress:
-      main:
-        enabled: true
-        ingressClassName: "nginx"
-        hosts:
-          - host: &host "qb.${SECRET_DOMAIN}"
-            paths:
-              - path: /
-                pathType: Prefix
-        tls:
-          - hosts:
-              - *host
+      setGateway: "true"
+
     podSecurityContext:
       runAsUser: 568
       runAsGroup: 568
       fsGroup: 568
       fsGroupChangePolicy: "OnRootMismatch"
       supplementalGroups:
-        - 100
+        - 65539
+
+    initContainers:
+      copy-config:
+        image: busybox:latest@sha256:ef320ff10026a50cf5f0213d35537ce0041ac1d96e9b7800bafd8bc9eff6c693
+        command:
+          - "/bin/sh"
+          - -c
+        args:
+          - cp /data/configfiles/* /data/config/
+        volumeMounts:
+          - name: config
+            mountPath: /data/config
+          - name: configfiles
+            mountPath: /data/configfiles
+
+    env:
+      UMASK: "022"
+      QBITTORRENT__PORT: &port 8080
+      QBITTORRENT__USE_PROFILE: "true"
+
+    hostname: *app
+
+    service:
+      main:
+        ports:
+          http:
+            port: *port
+
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: "nginx"
+        hosts:
+          - host: &host "qbittorrent.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+        tls:
+          - hosts:
+              - *host
+
     persistence:
       config:
         enabled: true
+        type: emptyDir
+        mountPath: /config/qBittorrent/config
+
+      cache:
+        enabled: true
+        type: emptyDir
+        mountPath: /config/qBittorrent/cache
+
+      configfiles:
+        enabled: true
+        type: configMap
+        name: qbittorrent-config
+        mountPath: "-"
+
+      data:
+        enabled: true
         existingClaim: qbittorrent-config-v1
+        mountPath: /config/qBittorrent/data
+
       media:
         enabled: true
         type: custom
         volumeSpec:
           nfs:
             server: '${NAS_ADDR}'
-            path: /srv/nfs
-        mountPath: /media
+            path: /srv/nfs/media
+        mountPath: /data/nas-media
+
     resources:
       requests:
-        cpu: 10m
-        memory: 250Mi
+        cpu: 35m
+        memory: 765M
       limits:
-        memory: 6000Mi
+        memory: 1426M
