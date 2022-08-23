@@ -77,6 +77,8 @@ spec:
       main:
         enabled: true
         ingressClassName: "nginx"
+        annotations:
+          cert-manager.io/cluster-issuer: 'letsencrypt-production'
         hosts:
           - host: &host "zigbee2mqtt.${SECRET_DOMAIN}"
             paths:
@@ -84,6 +86,7 @@ spec:
         tls:
           - hosts:
               - *host
+            secretName: 'zigbee2mqtt-tls'
 
     persistence:
       data:
