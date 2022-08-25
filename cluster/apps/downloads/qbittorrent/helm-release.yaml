@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: &app qbittorrent
+  name: qbittorrent
   namespace: downloads
 spec:
   interval: 15m
@@ -51,7 +51,7 @@ spec:
       QBITTORRENT__PORT: &port 8080
       QBITTORRENT__USE_PROFILE: "true"
 
-    hostname: *app
+    hostname: qbittorrent
 
     service:
       main:
@@ -95,11 +95,9 @@ spec:
 
       media:
         enabled: true
-        type: custom
-        volumeSpec:
-          nfs:
-            server: '${NAS_ADDR}'
-            path: /srv/nfs/media
+        type: nfs
+        server: '${NAS_ADDR}'
+        path: /srv/nfs/media
         mountPath: /data/nas-media
 
     resources:
