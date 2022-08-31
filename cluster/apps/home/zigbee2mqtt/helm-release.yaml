@@ -25,8 +25,8 @@ spec:
       mqtt:
         base_topic: zigbee2mqtt
         server: "mqtt://mosquitto.home"
-        # user: set by valuesFrom
-        # password: set by valuesFrom
+        user: '${SECRET_MQTT_USERNAME}'
+        password: '${SECRET_MQTT_PASSWORD}'
 
       homeassistant: true
 
@@ -35,29 +35,29 @@ spec:
 
       permit_join: false
 
-      # serial:
-      #   port: set by valuesFrom (tcp://<ip>:6638)
+      serial:
+        port: 'tcp://192.168.42.111:6638'
 
       advanced:
         log_output:
           - console
         network_key:
-          - 95
-          - 127
-          - 73
-          - 119
-          - 59
-          - 169
-          - 49
+          - 204
+          - 61
+          - 75
+          - 23
+          - 44
+          - 230
+          - 24
+          - 203
+          - 53
+          - 5
+          - 248
+          - 32
           - 50
-          - 96
-          - 72
-          - 42
-          - 246
-          - 182
-          - 104
-          - 11
-          - 41
+          - 84
+          - 44
+          - 159
         pan_id: 6752
 
       # Both of these need to be enabled for the webui
@@ -100,20 +100,3 @@ spec:
         memory: 127M
       limits:
         memory: 1364M
-
-  valuesFrom:
-    - kind: Secret
-      name: zigbee2mqtt
-      valuesKey: mqtt_user
-      targetPath: config.mqtt.user
-      optional: false
-    - kind: Secret
-      name: zigbee2mqtt
-      valuesKey: mqtt_password
-      targetPath: config.mqtt.password
-      optional: false
-    - kind: Secret
-      name: zigbee2mqtt
-      valuesKey: zigbee_adapter_port
-      targetPath: config.serial.port
-      optional: false
