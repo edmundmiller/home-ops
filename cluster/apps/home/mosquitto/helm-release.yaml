@@ -30,7 +30,8 @@ spec:
     service:
       main:
         type: LoadBalancer
-        loadBalancerIP: "${SVC_MOSQUITTO_ADDR}"
+        externalIPs:
+          - '${SVC_MOSQUITTO_ADDR}'
         annotations:
           coredns.io/hostname: "mqtt.${SECRET_DOMAIN}"
         externalTrafficPolicy: Local
