@@ -20,8 +20,6 @@ spec:
       repository: ghcr.io/angelnu/pod-gateway
       tag: v1.8.0@sha256:91a51d0cfcec00834ba3878e07fca2d7c3ce72ac259e2a2787600d0222dbdd9b
 
-    DNS: 1.1.1.1
-
     additionalContainers:
       gluetun:
         image: qmcgaw/gluetun:v3.31.1@sha256:dabf4efdadafd6acce67bf89b11396e5c87dd1e25705b36fc9211730c943db47
