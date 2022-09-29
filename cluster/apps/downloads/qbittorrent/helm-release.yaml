@@ -49,6 +49,7 @@ spec:
     env:
       UMASK: "022"
       QBITTORRENT__PORT: &port 8080
+      QBITTORRENT__BT_PORT: &port-bt 50413
       QBITTORRENT__USE_PROFILE: "true"
 
     hostname: qbittorrent
@@ -58,6 +59,17 @@ spec:
         ports:
           http:
             port: *port
+      bittorrent:
+        enabled: true
+        type: LoadBalancer
+        externalIPs: ["${SVC_QBITTORRENT_ADDR}"]
+        ports:
+          bittorrent:
+            enabled: true
+            port: *port-bt
+            protocol: TCP
+            targetPort: *port-bt
+        externalTrafficPolicy: Local
 
     ingress:
       main:
