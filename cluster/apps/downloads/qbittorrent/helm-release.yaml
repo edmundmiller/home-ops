@@ -97,7 +97,7 @@ spec:
         enabled: true
         type: nfs
         server: '${NAS_ADDR}'
-        path: /srv/nfs/media
+        path: /srv/nfs
         mountPath: /data/nas-media
 
     resources:
