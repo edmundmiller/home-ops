@@ -118,3 +118,11 @@ spec:
         memory: 765M
       limits:
         memory: 1426M
+    # HACK
+    probes:
+      liveness:
+        enabled: false
+      readiness:
+        enabled: false
+      startup:
+        enabled: false
