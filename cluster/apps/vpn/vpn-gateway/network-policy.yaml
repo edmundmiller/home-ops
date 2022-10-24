@@ -1,6 +1,6 @@
 ---
 apiVersion: cilium.io/v2
-kind: CiliumNetworkPolicy
+kind: NetworkPolicy
 metadata:
   name: downloads-gateway-pod-gateway
   namespace: vpn
