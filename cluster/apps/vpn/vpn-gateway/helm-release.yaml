@@ -3,9 +3,11 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: vpn-gateway
-  namespace: vpn
+  labels:
+    # Avoid variable substitution of shell variables bellow
+    kustomize.toolkit.fluxcd.io/substitute: disabled
 spec:
-  interval: 15m
+  interval: 5m
   chart:
     spec:
       chart: pod-gateway
@@ -13,76 +15,96 @@ spec:
       interval: 15m
       sourceRef:
         kind: HelmRepository
-        name: angelnu
+        name: angelnu-helm-charts
         namespace: flux-system
   values:
+
     image:
       repository: ghcr.io/angelnu/pod-gateway
       tag: v1.8.1@sha256:690b6365728fe9012ad4cdfca38334992664596513dca187d1b93d2025205776
-
-    additionalContainers:
-      gluetun:
-        image: qmcgaw/gluetun:v3.31.1@sha256:dabf4efdadafd6acce67bf89b11396e5c87dd1e25705b36fc9211730c943db47
+    webhook:
+      image:
+        repository: ghcr.io/angelnu/gateway-admision-controller
+        # Use dev version
+        pullPolicy: Always
+        tag: dev
+    addons:
+      vpn:
+        enabled: true
+        type: gluetun
+        gluetun:
+          image:
+            repository: docker.io/qmcgaw/gluetun
+            tag: latest@sha256:9c7b9a58fe027db2ea794aad018eec44b1a7f477ddf571d003dabdd64d4dd81c
 
         env:
-          - name: VPN_TYPE
-            value: wireguard
-          - name: VPN_INTERFACE
-            value: wg0
-          - name: FIREWALL
-            value: "off"
-          - name: DOT
-            value: "off"
-          - name: HEALTH_TARGET_ADDRESS
-            value: "1.1.1.1"
-          - name: HEALTH_VPN_DURATION_INITIAL
-            value: 30s
+        # - name:  VPN_SERVICE_PROVIDER
+        #   value: set in secret
+        - name:  VPN_TYPE
+          value: wireguard
+        - name:  VPN_INTERFACE
+          value: wg0
+        - name:  FIREWALL
+          value: "off"
+        - name:  DOT
+          value: "off"
+        # - name:  WIREGUARD_PRIVATE_KEY
+        #   value: set in secret
+        # - name:  WIREGUARD_PRESHARED_KEY
+        #   value: set in secret
+        # - name:  WIREGUARD_ADDRESSES
+        #   value: set in secret
 
         envFrom:
           - secretRef:
               name: vpnconfig
 
-        securityContext:
-          capabilities:
-            add:
-              - NET_ADMIN
 
-    addons:
-      netshoot:
-        enabled: true
+        livenessProbe:
+          exec:
+            command:
+              - sh
+              - -c
+              - if [ $(wget -q -O- https://ipinfo.io/country) == 'BE' ]; then exit 0; else exit $?; fi
+          initialDelaySeconds: 30
+          periodSeconds: 60
+          failureThreshold: 3
 
-    podAnnotations:
-      configmap.reloader.stakater.com/reload: vpn-gateway-pod-gateway
-      secret.reloader.stakater.com/reload: vpnconfig
+        networkPolicy:
+          enabled: true
+
+          egress:
+            - to:
+              - ipBlock:
+                  cidr: 0.0.0.0/0
+              ports:
+              # VPN traffic
+              - port: &vpn_port 1637
+                protocol: UDP
+            - to:
+              - ipBlock:
+                  cidr: 10.0.0.0/8
 
     routed_namespaces:
-      - downloads
+    - vpn
 
     settings:
+      # -- If using a VPN, interface name created by it
       VPN_INTERFACE: wg0
-      VXLAN_ID: 43
-      VXLAN_IP_NETWORK: 172.16.0
-      VXLAN_GATEWAY_FIRST_DYNAMIC_IP: 20
+      # -- Prevent non VPN traffic to leave the gateway
       VPN_BLOCK_OTHER_TRAFFIC: true
-      VPN_TRAFFIC_PORT: "51820"
-      VPN_LOCAL_CIDRS: "10.0.0.0/8 192.168.0.0/16 172.16.0.0/12"
-      NOT_ROUTED_TO_GATEWAY_CIDRS: "10.0.0.0/8 192.168.0.0/16 172.16.0.0/12"
+      # -- If VPN_BLOCK_OTHER_TRAFFIC is true, allow VPN traffic over this port
+      VPN_TRAFFIC_PORT: *vpn_port
+      # -- Traffic to these IPs will be send through the K8S gateway
+      VPN_LOCAL_CIDRS: "10.0.0.0/8 192.168.0.0/16"
 
+    # -- settings to expose ports, usually through a VPN provider.
+    # NOTE: if you change it you will need to manually restart the gateway POD
     publicPorts:
-      - hostname: qbittorrent
-        IP: 10
-        ports:
-          - type: tcp
-            port: ${VPN_FORWARD_PORT_1}
-          - type: udp
-            port: ${VPN_FORWARD_PORT_1}
-
-    webhook:
-      gatewayAnnotation: setGateway
-      gatewayDefault: false
-      gatewayLabel: setGateway
-      namespaceSelector:
-        label: "vpn-routed-gateway"
-      image:
-        repository: ghcr.io/angelnu/gateway-admision-controller
-        tag: v3.7.0@sha256:985eb60fd0017f657d5e66707f7e9b3f764f3337a87a379d26cd15e950bd79ad
+    - hostname: qbittorrent
+      IP: 10
+      ports:
+      - type: udp
+        port: 18289
+      - type: tcp
+        port: 18289
