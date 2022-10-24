@@ -9,12 +9,12 @@ spec:
   chart:
     spec:
       chart: pod-gateway
-      version: 5.6.2
+      version: 5.8.0
+      interval: 15m
       sourceRef:
         kind: HelmRepository
-        name: k8s-at-home
+        name: angelnu
         namespace: flux-system
-      interval: 15m
   values:
     image:
       repository: ghcr.io/angelnu/pod-gateway
@@ -57,8 +57,6 @@ spec:
 
     routed_namespaces:
       - downloads
-
-    DNS: 172.16.0.1
 
     settings:
       VPN_INTERFACE: wg0
