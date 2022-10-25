@@ -18,7 +18,6 @@ spec:
         name: angelnu
         namespace: flux-system
   values:
-
     image:
       repository: ghcr.io/angelnu/pod-gateway
       tag: v1.8.1@sha256:690b6365728fe9012ad4cdfca38334992664596513dca187d1b93d2025205776
@@ -38,16 +37,16 @@ spec:
             tag: latest@sha256:9c7b9a58fe027db2ea794aad018eec44b1a7f477ddf571d003dabdd64d4dd81c
 
         env:
-        # - name:  VPN_SERVICE_PROVIDER
-        #   value: set in secret
-        - name:  VPN_TYPE
-          value: wireguard
-        - name:  VPN_INTERFACE
-          value: wg0
-        - name:  FIREWALL
-          value: "off"
-        - name:  DOT
-          value: "off"
+          # - name:  VPN_SERVICE_PROVIDER
+          #   value: set in secret
+          - name: VPN_TYPE
+            value: wireguard
+          - name: VPN_INTERFACE
+            value: wg0
+          - name: FIREWALL
+            value: 'off'
+          - name: DOT
+            value: 'off'
         # - name:  WIREGUARD_PRIVATE_KEY
         #   value: set in secret
         # - name:  WIREGUARD_PRESHARED_KEY
@@ -58,7 +57,6 @@ spec:
         envFrom:
           - secretRef:
               name: vpnconfig
-
 
         livenessProbe:
           exec:
@@ -75,18 +73,18 @@ spec:
 
           egress:
             - to:
-              - ipBlock:
-                  cidr: 0.0.0.0/0
+                - ipBlock:
+                    cidr: 0.0.0.0/0
               ports:
-              # VPN traffic
-              - port: &vpn_port 1637
-                protocol: UDP
+                # VPN traffic
+                - port: &vpn_port 1637
+                  protocol: UDP
             - to:
-              - ipBlock:
-                  cidr: 10.0.0.0/8
+                - ipBlock:
+                    cidr: 10.0.0.0/8
 
     routed_namespaces:
-    - downloads
+      - downloads
 
     settings:
       # -- If using a VPN, interface name created by it
@@ -96,15 +94,15 @@ spec:
       # -- If VPN_BLOCK_OTHER_TRAFFIC is true, allow VPN traffic over this port
       VPN_TRAFFIC_PORT: *vpn_port
       # -- Traffic to these IPs will be send through the K8S gateway
-      VPN_LOCAL_CIDRS: "10.0.0.0/8 192.168.0.0/16"
+      VPN_LOCAL_CIDRS: '10.0.0.0/8 192.168.0.0/16'
 
     # -- settings to expose ports, usually through a VPN provider.
     # NOTE: if you change it you will need to manually restart the gateway POD
     publicPorts:
-    - hostname: qbittorrent
-      IP: 10
-      ports:
-      - type: udp
-        port: "${VPN_FORWARDED_PORT_1}"
-      - type: tcp
-        port: "${VPN_FORWARDED_PORT_1}"
+      - hostname: qbittorrent
+        IP: 10
+        ports:
+          - type: udp
+            port: '${VPN_FORWARDED_PORT_1}'
+          - type: tcp
+            port: '${VPN_FORWARDED_PORT_1}'
