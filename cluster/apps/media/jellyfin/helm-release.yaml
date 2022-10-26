@@ -23,7 +23,7 @@ spec:
   values:
     image:
       repository: ghcr.io/onedr0p/jellyfin
-      tag: 10.8.5@sha256:b6e93e1bf3c8917d0136034db1fbd6455a90812f7083946d9101d9fca8ea53d2
+      tag: 10.8.5@sha256:82952fc1e95c4424e20fdf165ad990ee582f92b69c3d0607f27cdb720648e8b6
 
     podSecurityContext:
       runAsUser: 568
