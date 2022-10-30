@@ -74,7 +74,7 @@ spec:
                     cidr: 0.0.0.0/0
               ports:
                 # VPN traffic
-                - port: &vpn_port 1637
+                - port: &vpn_port '${VPN_FORWARDED_PORT_1}'
                   protocol: UDP
             - to:
                 - ipBlock:
