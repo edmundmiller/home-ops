@@ -65,21 +65,6 @@ spec:
           periodSeconds: 60
           failureThreshold: 3
 
-        networkPolicy:
-          enabled: false
-
-          egress:
-            - to:
-                - ipBlock:
-                    cidr: 0.0.0.0/0
-              ports:
-                # VPN traffic
-                - port: &vpn_port '${VPN_FORWARDED_PORT_1}'
-                  protocol: UDP
-            - to:
-                - ipBlock:
-                    cidr: 10.0.0.0/8
-
     routed_namespaces:
       - downloads
 
