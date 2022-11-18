@@ -5,6 +5,7 @@ metadata:
   name: k8s-gateway
   namespace: networking
 spec:
+  # FIXME Upgrade failed
   interval: 15m
   chart:
     spec:

@@ -5,6 +5,8 @@ metadata:
   name: &app zigbee2mqtt
   namespace: home
 spec:
+  # FIXME Upgrade failed
+  suspend: true
   interval: 15m
   chart:
     spec:

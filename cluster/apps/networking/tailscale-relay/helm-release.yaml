@@ -5,6 +5,7 @@ metadata:
   name: tailscale-relay
   namespace: networking
 spec:
+  # FIXME Upgrade failed
   interval: 5m
   chart:
     spec:

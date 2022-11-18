@@ -5,6 +5,8 @@ metadata:
   name: &app prowlarr
   namespace: downloads
 spec:
+  # FIXME Rollback failed
+  suspend: true
   interval: 15m
   chart:
     spec:
