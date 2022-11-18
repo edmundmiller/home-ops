@@ -5,7 +5,7 @@ namespace: downloads
 resources:
   - config-pvc.yaml
   - helm-release.yaml
-  - tag-tracker-errors
+  # - tag-tracker-errors
 commonLabels:
   app.kubernetes.io/name: qbittorrent
   app.kubernetes.io/instance: qbittorrent
