@@ -10,112 +10,76 @@
       ansible.builtin.pause:
         seconds: 5
   tasks:
-    - name: Locale
-      block:
-        - name: Locale | Set timezone
-          community.general.timezone:
-            name: "{{ timezone | default('Etc/UTC') }}"
-    - name: Networking
-      block:
-        - name: Networking | Set hostname to inventory hostname
-          ansible.builtin.hostname:
-            name: "{{ inventory_hostname }}"
-        - name: Networking | Update /etc/hosts to include inventory hostname
-          ansible.builtin.blockinfile:
-            path: /etc/hosts
-            block: |
-              127.0.1.1   {{ inventory_hostname }}
-    - name: Packages
-      block:
-        - name: Packages | Improve dnf performance
-          ansible.builtin.blockinfile:
-            path: /etc/dnf/dnf.conf
-            block: |
-              defaultyes=True
-              deltarpm=True
-              install_weak_deps=False
-              max_parallel_downloads={{ ansible_processor_vcpus | default('8') }}
-        - name: Packages | Import rpmfusion keys
-          ansible.builtin.rpm_key:
-            state: present
-            key: "{{ item }}"
-          loop:
-            - https://rpmfusion.org/keys?action=AttachFile&do=get&target=RPM-GPG-KEY-rpmfusion-free-fedora-2020
-            - https://rpmfusion.org/keys?action=AttachFile&do=get&target=RPM-GPG-KEY-rpmfusion-nonfree-fedora-2020
-        - name: Packages | Install required packages
-          ansible.builtin.dnf:
-            name: "{{ packages | default([]) }}"
-            state: present
-            update_cache: true
-        - name: Packages | Remove leaf packages
-          ansible.builtin.dnf:
-            autoremove: true
-        - name: Packages | Enable automatic downloads of updates
-          ansible.builtin.systemd:
-            service: dnf-automatic-download.timer
-            enabled: true
-            state: started
-    - name: User Configuration
-      block:
-        - name: User Configuration | Add additional SSH public keys
-          ansible.posix.authorized_key:
-            user: "{{ ansible_user }}"
-            key: "{{ item }}"
-          loop: "{{ public_ssh_keys | default([]) }}"
-    - name: System Configuration (1)
-      block:
-        - name: System Configuration (1) | Disable firewalld
-          ansible.builtin.systemd:
-            service: firewalld.service
-            enabled: false
-            masked: true
-            state: stopped
-        - name: System Configuration (1) | Enable fstrim
-          ansible.builtin.systemd:
-            service: fstrim.timer
-            enabled: true
-    - name: System Configuration (2)
-      block:
-        - name: System Configuration (2) | Enable kernel modules now
-          community.general.modprobe:
-            name: "{{ item }}"
-            state: present
-          loop: [br_netfilter, overlay, rbd]
-        - name: System Configuration (2) | Enable kernel modules on boot
-          ansible.builtin.copy:
-            mode: 0644
-            content: "{{ item }}"
-            dest: "/etc/modules-load.d/{{ item }}.conf"
-          loop: [br_netfilter, overlay, rbd]
-        - name: System Configuration (2) | Set sysctls
-          ansible.posix.sysctl:
-            name: "{{ item.key }}"
-            value: "{{ item.value }}"
-            sysctl_file: /etc/sysctl.d/99-kubernetes.conf
-            reload: true
-          with_dict: "{{ sysctl_config }}"
-          vars:
-            sysctl_config:
-              net.ipv4.ip_forward: 1
-              net.ipv4.conf.all.forwarding: 1
-              net.ipv4.conf.all.rp_filter: 0
-              net.ipv4.conf.default.rp_filter: 0
-              net.ipv6.conf.all.forwarding: 1
-              net.bridge.bridge-nf-call-iptables: 1
-              net.bridge.bridge-nf-call-ip6tables: 1
-              fs.inotify.max_user_watches: 524288
-              fs.inotify.max_user_instances: 512
-        - name: System Configuration (2) | Disable swap
-          ansible.builtin.dnf:
-            name: zram-generator-defaults
-            state: absent
-        - name: System Configuration (2) | Permissive SELinux
-          ansible.posix.selinux:
-            state: permissive
-            policy: targeted
-      notify: Reboot
+    - name: Check if cluster is installed
+      check_mode: false
+      ansible.builtin.stat:
+        path: "/etc/rancher/k3s/config.yaml"
+      register: k3s_check_installed
 
-  handlers:
-    - name: Reboot
-      ansible.builtin.reboot:
-        msg: Rebooting nodes
+    - name: Set manifest facts
+      ansible.builtin.set_fact:
+        k3s_server_manifests_templates: []
+        k3s_server_manifests_urls: []
+      when: k3s_check_installed.stat.exists
+
+    - name: Install Kubernetes
+      ansible.builtin.include_role:
+        name: xanmanning.k3s
+        public: true
+      vars:
+        k3s_state: installed
+
+    - name: Get absolute path to this Git repository
+      delegate_to: localhost
+      become: false
+      run_once: true
+      check_mode: false
+      ansible.builtin.command: |-
+        git rev-parse --show-toplevel
+      register: repo_abs_path
+
+    - name: Copy kubeconfig to provision folder
+      run_once: true
+      ansible.builtin.fetch:
+        src: "/etc/rancher/k3s/k3s.yaml"
+        dest: "{{ repo_abs_path.stdout }}/provision/kubeconfig"
+        flat: true
+      when:
+        - k3s_control_node is defined
+        - k3s_control_node
+
+    - name: Update kubeconfig with the correct IPv4 address
+      delegate_to: localhost
+      become: false
+      run_once: true
+      ansible.builtin.replace:
+        path: "{{ repo_abs_path.stdout }}/provision/kubeconfig"
+        regexp: "https://127.0.0.1:6443"
+        replace: "https://{{ k3s_registration_address }}:6443"
+
+    # Cleaning up the manifests from the /var/lib/rancher/k3s/server/manifests
+    # directory is needed because k3s has an awesome "feature" to always deploy
+    # these on restarting the k3s systemd service. Removing them does NOT
+    # uninstall the manifests.
+
+    # Removing them means we can manage the lifecycle of these components
+    # outside of the /var/lib/rancher/k3s/server/manifests directory
+
+    # FIXME(ansible): Check for deployments to be happy rather than waiting
+    - name: Wait for k3s to finish installing the deployed manifests
+      ansible.builtin.wait_for:
+        timeout: 15
+      when: k3s_server_manifests_templates | length > 0
+        or k3s_server_manifests_dir | length > 0
+
+    - name: Remove deployed manifest templates
+      ansible.builtin.file:
+        path: "{{ k3s_server_manifests_dir }}/{{ item | basename | regex_replace('\\.j2$', '') }}"
+        state: absent
+      loop: "{{ k3s_server_manifests_templates | default([]) }}"
+
+    - name: Remove deployed manifest urls
+      ansible.builtin.file:
+        path: "{{ k3s_server_manifests_dir }}/{{ item.filename }}"
+        state: absent
+      loop: "{{ k3s_server_manifests_urls | default([]) }}"
