@@ -4,9 +4,6 @@ kind: NetworkPolicy
 metadata:
   name: vpn-gateway-pod-gateway
   namespace: vpn
-  labels:
-    app.kubernetes.io/instance: vpn-gateway
-    app.kubernetes.io/name: pod-gateway
 spec:
   egress:
     - ports:
@@ -17,9 +14,5 @@ spec:
             cidr: 0.0.0.0/0
     - to:
         - namespaceSelector: {}
-  podSelector:
-    matchLabels:
-      app.kubernetes.io/instance: vpn-gateway
-      app.kubernetes.io/name: pod-gateway
   policyTypes:
     - Egress
