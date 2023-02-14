@@ -32,19 +32,19 @@ spec:
       supplementalGroups:
         - 65539
 
-    initContainers:
-      copy-config:
-        image: busybox:latest@sha256:7b3ccabffc97de872a30dfd234fd972a66d247c8cfc69b0550f276481852627c
-        command:
-          - "/bin/sh"
-          - -c
-        args:
-          - cp /data/configfiles/* /data/config/
-        volumeMounts:
-          - name: config
-            mountPath: /data/config
-          - name: configfiles
-            mountPath: /data/configfiles
+    # initContainers:
+    #   copy-config:
+    #     image: busybox:latest@sha256:7b3ccabffc97de872a30dfd234fd972a66d247c8cfc69b0550f276481852627c
+    #     command:
+    #       - "/bin/sh"
+    #       - -c
+    #     args:
+    #       - cp /data/configfiles/* /data/config/
+    #     volumeMounts:
+    #       - name: config
+    #         mountPath: /data/config
+    #       - name: configfiles
+    #         mountPath: /data/configfiles
 
     env:
       TZ: ${TIMEZONE}
@@ -93,11 +93,11 @@ spec:
         type: emptyDir
         mountPath: /config/qBittorrent/cache
 
-      configfiles:
-        enabled: true
-        type: configMap
-        name: qbittorrent-config
-        mountPath: "-"
+      # configfiles:
+      #   enabled: true
+      #   type: configMap
+      #   name: qbittorrent-config
+      #   mountPath: "-"
 
       data:
         enabled: true
