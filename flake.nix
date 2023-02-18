@@ -9,6 +9,7 @@
           kubectl
           kubernetes-helm
           fluxcd
+          stern
           # Terraform
           terraform
           jq
@@ -25,6 +26,7 @@
           tflint
           go-task
           k9s
+          openssl
         ];
 
         shellHook = ''
