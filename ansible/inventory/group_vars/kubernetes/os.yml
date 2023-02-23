@@ -20,6 +20,19 @@ fedora:
     - python3-libselinux
     - python3-pyyaml
 
+manjaro:
+  packages:
+    - hdparm
+    - htop
+    - ipvsadm
+    - lm_sensors
+    - nano
+    - nfs-utils
+    - nvme-cli
+    - socat
+    - python-kubernetes
+    - python-yaml
+
 ubuntu:
   packages:
     - hdparm

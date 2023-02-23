@@ -53,6 +53,14 @@
           notify: Reboot
           when: "'raspi' in ansible_kernel"
       when: ansible_facts['distribution'] == 'Ubuntu'
+    - name: Packages | Manjaro
+      block:
+        - name: Packages | Install required packages
+          community.general.pacman:
+            name: "{{ manjaro.packages | default([]) }}"
+            state: present
+            update_cache: true
+      when: ansible_facts['distribution'] == 'Archlinux' # Manjaro
     - name: User Configuration
       block:
         - name: User Configuration | Add additional SSH public keys
