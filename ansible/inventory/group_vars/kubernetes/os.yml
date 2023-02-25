@@ -22,6 +22,7 @@ fedora:
 
 manjaro:
   packages:
+    - apparmor
     - hdparm
     - htop
     - ipvsadm
