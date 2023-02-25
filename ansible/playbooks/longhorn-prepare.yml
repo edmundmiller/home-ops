@@ -25,23 +25,54 @@
         group: kah
 
     - name: Ensure nfs and open-iscsi
+      when: ansible_facts['distribution'] == 'Fedora'
       dnf:
         pkg:
           - iscsi-initiator-utils
           - nfs-utils
 
-    - name: Setup storage disks
+    - name: Ensure open-iscsi (Manjaro)
+      when: ansible_facts['distribution'] == 'Archlinux' # Manjaro
+      community.general.pacman:
+        name:
+          - open-iscsi
+
+    # - name: Setup storage disks (Fedora)
+    #   when: ansible_facts['distribution'] == 'Fedora'
+    #   block:
+    #     - name: Create a new ext4 primary partition
+    #       parted:
+    #         device: /dev/nvme0n1
+    #         number: 1
+    #         state: present
+    #         fs_type: ext4
+    #     - name: Mount Disk to /data
+    #       mount:
+    #         path: /data
+    #         src: /dev/nvme0n1
+    #         fstype: ext4
+    #         state: mounted
+    #     - name: Give kah ownership
+    #       file:
+    #         path: /data
+    #         owner: kah
+    #         group: kah
+    #         recurse: true
+    #         # mode: '1777'
+
+    - name: Setup storage disks (Manjaro)
+      when: ansible_facts['distribution'] == 'Archlinux' # Manjaro
       block:
         - name: Create a new ext4 primary partition
           parted:
-            device: /dev/nvme0n1
+            device: /dev/sda
             number: 1
             state: present
             fs_type: ext4
         - name: Mount Disk to /data
           mount:
             path: /data
-            src: /dev/nvme0n1
+            src: /dev/sda1
             fstype: ext4
             state: mounted
         - name: Give kah ownership
