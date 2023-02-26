@@ -16,12 +16,12 @@ tasks:
   all:decrypt:
     desc: Decrypt all secret files
     cmds:
-      - find ./cluster -type f -iname "*sops*" -exec sops --decrypt --in-place {} \;
-      - find ./provision -type f -iname "*sops*" -exec sops --decrypt --in-place {} \;
+      - find ./kubernetes -type f -iname "*sops*" -exec sops --decrypt --in-place {} \;
+      - find ./ansible -type f -iname "*sops*" -exec sops --decrypt --in-place {} \;
     silent: true
   all:encrypt:
     desc: encrypt all secret files
     cmds:
-      - find ./cluster -type f -iname "*sops*" -exec sops --encrypt --in-place {} \;
-      - find ./provision -type f -iname "*sops*" -exec sops --encrypt --in-place {} \;
+      - find ./kubernetes -type f -iname "*sops*" -exec sops --encrypt --in-place {} \;
+      - find ./ansible -type f -iname "*sops*" -exec sops --encrypt --in-place {} \;
     silent: true
