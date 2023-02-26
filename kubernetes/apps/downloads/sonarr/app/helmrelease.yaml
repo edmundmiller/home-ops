@@ -120,3 +120,5 @@ spec:
         memory: 250Mi
       limits:
         memory: 2000Mi
+    nodeSelector:
+      kubernetes.io/arch: "amd64"
