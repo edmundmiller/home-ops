@@ -2,8 +2,10 @@
 # yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+namespace: downloads
 resources:
-  - ./namespace.yaml
-  - ./lidarr/ks.yaml
-  - ./prowlarr/ks.yaml
-  - ./sonarr/ks.yaml
+  - ./helmrelease.yaml
+labels:
+  - pairs:
+      app.kubernetes.io/name: lidarr
+      app.kubernetes.io/instance: lidarr
