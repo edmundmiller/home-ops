@@ -1,0 +1,20 @@
+- hosts:
+    - router
+  become: true
+  gather_facts: true
+  any_errors_fatal: true
+  tasks:
+    - name: Install tailscale
+      ansibleguy.opnsense.package:
+        name: "tailscale"
+        action: "install"
+
+    - name: Enable tailscale
+      ansibleguy.opnsense.service:
+        name: 'tailscale'
+        action: 'enable'
+
+    - name: Start tailscale
+      ansibleguy.opnsense.service:
+        name: 'tailscale'
+        action: 'start'
