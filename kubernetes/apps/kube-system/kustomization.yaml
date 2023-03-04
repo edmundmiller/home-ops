@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./kube-vip/ks.yaml
+  - ./intel-device-plugin/ks.yaml
   - ./local-path-provisioner/ks.yaml
   - ./longhorn/ks.yaml
   - ./metrics-server/ks.yaml
