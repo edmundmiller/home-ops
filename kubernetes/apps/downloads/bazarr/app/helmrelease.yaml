@@ -91,6 +91,9 @@ spec:
         memory: 250Mi
       limits:
         memory: 2000Mi
+    # FIXME
+    nodeSelector:
+      kubernetes.io/arch: "amd64"
     sidecars:
       subcleaner:
         image: k8s.gcr.io/git-sync/git-sync:v3.6.4
