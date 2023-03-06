@@ -35,7 +35,7 @@ spec:
     #       - secretRef:
     #           name: miniflux-secret
     controller:
-      replicas: 2
+      replicas: 0
       strategy: RollingUpdate
       annotations:
         reloader.stakater.com/auto: "true"
