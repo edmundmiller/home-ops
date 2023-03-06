@@ -44,17 +44,14 @@ spec:
       tag: edge
     env:
       TZ: "${TIMEZONE}"
-      RECYCLARR__PORT: &port 80
-    # envFrom:
-    #   - secretRef:
-    #       name: radarr-secret
-    #   - secretRef:
-    #       name: sonarr-secret
+    envFrom:
+      - secretRef:
+          name: radarr-secret
+      - secretRef:
+          name: sonarr-secret
     service:
       main:
-        ports:
-          http:
-            port: *port
+        enabled: false
     podSecurityContext:
       runAsUser: 568
       runAsGroup: 568
