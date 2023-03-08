@@ -6,12 +6,9 @@ metadata:
   name: cluster-apps-jellyfin
   namespace: flux-system
 spec:
-  # TODO
-  # dependsOn:
-  #   - name: cluster-apps-external-secrets-stores
-  #   - name: cluster-apps-rook-ceph-cluster
-  #   - name: cluster-apps-volsync
-  #   - name: cluster-apps-intel-device-plugin-gpu
+  dependsOn:
+    - name: cluster-apps-longhorn
+    - name: cluster-apps-intel-device-plugin-gpu
   path: ./kubernetes/apps/media/jellyfin/app
   prune: true
   sourceRef:
