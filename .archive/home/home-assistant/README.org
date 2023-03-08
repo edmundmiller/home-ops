@@ -1,7 +1,0 @@
-#+TITLE: Home-assistant
-
-
-** HACS
-
-To download it, I had to copy and past the download script. ~wget~ piped into to
-bash didn't work for whatever reason.
