@@ -47,4 +47,4 @@ spec:
         password: '${SECRET_GITEA_PASSWORD}'
         email: '${SECRET_GITEA_EMAIL}'
     persistence:
-      storageClass: longhorn
+      storageClass: local-path
