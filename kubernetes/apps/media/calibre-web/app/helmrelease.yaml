@@ -61,9 +61,9 @@ spec:
         enabled: true
         type: nfs
         server: '${NAS_ADDR}'
-        path: /srv/nfs/books
+        path: /srv/nfs/books/ebooks
         mountPath: /media
-        readOnly: true
+        readOnly: false
     ingress:
       main:
         enabled: true
