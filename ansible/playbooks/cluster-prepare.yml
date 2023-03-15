@@ -60,6 +60,21 @@
             name: "{{ manjaro.packages | default([]) }}"
             state: present
             update_cache: true
+        # FIXME
+        # - name: Install Fan
+        #   # TODO when: "'rockpro64' in ansible_kernel"
+        #   block:
+        #   - name: Install packages for building
+        #     community.general.pacman:
+        #       name:
+        #         - lua53
+        #         - gcc
+        #         - make
+        #         - luarocks
+        #         - git
+        #       state: present
+        #   - name: Build ATS with luarocks
+        #     ansible.builtin.shell: luarocks build  https://raw.githubusercontent.com/tuxd3v/ats/master/ats-master-0.rockspec
       when: ansible_facts['distribution'] == 'Archlinux' # Manjaro
     - name: User Configuration
       block:
