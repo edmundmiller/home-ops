@@ -26,6 +26,11 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    controller:
+      replicas: 0
+      strategy: RollingUpdate
+      annotations:
+        reloader.stakater.com/auto: "true"
     ingress:
       enabled: true
       className: nginx
