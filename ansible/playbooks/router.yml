@@ -18,3 +18,7 @@
       ansibleguy.opnsense.service:
         name: 'tailscale'
         action: 'start'
+
+    # TODO Make unbound point at k8s gateway
+    # TODO Make static IPs for all nodes
+    # TODO Make static IPs for computers

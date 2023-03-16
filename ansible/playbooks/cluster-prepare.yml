@@ -75,6 +75,8 @@
         #       state: present
         #   - name: Build ATS with luarocks
         #     ansible.builtin.shell: luarocks build  https://raw.githubusercontent.com/tuxd3v/ats/master/ats-master-0.rockspec
+        # TODO Setup no suspend on laptop lid close
+        # TODO Install nvidia drivers
       when: ansible_facts['distribution'] == 'Archlinux' # Manjaro
     - name: User Configuration
       block:
