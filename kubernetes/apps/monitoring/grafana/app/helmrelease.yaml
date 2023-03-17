@@ -1,0 +1,138 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/helmrelease_v2beta1.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: grafana
+  namespace: monitoring
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: grafana
+      version: 6.52.4
+      sourceRef:
+        kind: HelmRepository
+        name: grafana
+        namespace: flux-system
+      interval: 15m
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    rbac:
+      pspEnabled: false
+    env:
+      GF_EXPLORE_ENABLED: true
+      GF_PANELS_DISABLE_SANITIZE_HTML: true
+      GF_LOG_FILTERS: rendering:debug
+      GF_DATE_FORMATS_FULL_DATE: "DD.MM.YYYY hh:mm:ss"
+      GF_SECURITY_ALLOW_EMBEDDING: true
+      GF_SECURITY_COOKIE_SAMESITE: grafana
+    admin:
+      existingSecret: grafana-admin-creds
+    grafana.ini:
+      server:
+        root_url: "https://grafana.${SECRET_DOMAIN}"
+      paths:
+        data: /var/lib/grafana/data
+        logs: /var/log/grafana
+        plugins: /var/lib/grafana/plugins
+        provisioning: /etc/grafana/provisioning
+      analytics:
+        check_for_updates: false
+      log:
+        mode: console
+      grafana_net:
+        url: https://grafana.net
+    dashboardProviders:
+      dashboardproviders.yaml:
+        apiVersion: 1
+        providers:
+          - name: "default"
+            orgId: 1
+            folder: ""
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/default
+    datasources:
+      datasources.yaml:
+        apiVersion: 1
+        # list of datasources that should be deleted from the database
+        deleteDatasources:
+          - name: Loki
+            orgId: 1
+        datasources:
+          # TODO
+          # - name: Prometheus
+          #   type: prometheus
+          #   access: proxy
+          #   url: http://thanos-query-frontend.monitoring.svc.cluster.local.:9090
+          #   isDefault: true
+          # - name: Loki
+          #   type: loki
+          #   access: proxy
+          #   url: http://loki-gateway.monitoring.svc.cluster.local.:80
+    dashboards:
+      default:
+        home-assistant:
+          url: https://raw.githubusercontent.com/auricom/home-ops/main/kubernetes/apps/monitoring/grafana/dashboards/home-assistant.json
+          datasource: Prometheus
+        homelab-temperatures:
+          url: https://raw.githubusercontent.com/auricom/home-ops/main/kubernetes/apps/monitoring/grafana/dashboards/homelab-temperatures.json
+          datasource: Prometheus
+        truenas:
+          url: https://raw.githubusercontent.com/auricom/home-ops/main/kubernetes/apps/monitoring/grafana/dashboards/truenas.json
+          datasource: Prometheus
+    sidecar:
+      dashboards:
+        enabled: true
+        searchNamespace: ALL
+        # folderAnnotation: grafana_folder
+        # provider:
+        #   foldersFromFilesStructure: true
+      datasources:
+        enabled: true
+        searchNamespace: ALL
+    plugins:
+      - natel-discrete-panel
+      - pr0ps-trackmap-panel
+      - grafana-piechart-panel
+      - vonage-status-panel
+      - grafana-worldmap-panel
+      - grafana-clock-panel
+    serviceMonitor:
+      enabled: true
+    ingress:
+      enabled: true
+      ingressClassName: "nginx"
+      annotations:
+        hajimari.io/icon: simple-icons:grafana
+      hosts:
+        - &host "grafana.${SECRET_DOMAIN}"
+      tls:
+        - hosts:
+            - *host
+    persistence:
+      enabled: false
+    affinity:
+      podAntiAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values: ["grafana"]
+              topologyKey: kubernetes.io/hostname
