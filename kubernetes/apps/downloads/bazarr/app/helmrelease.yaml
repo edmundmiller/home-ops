@@ -96,7 +96,7 @@ spec:
       kubernetes.io/arch: "amd64"
     sidecars:
       subcleaner:
-        image: k8s.gcr.io/git-sync/git-sync:v3.6.4
+        image: k8s.gcr.io/git-sync/git-sync:v3.6.5
         imagePullPolicy: IfNotPresent
         args:
           - --repo=https://github.com/KBlixt/subcleaner.git
