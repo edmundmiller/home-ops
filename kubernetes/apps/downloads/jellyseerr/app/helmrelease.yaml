@@ -66,8 +66,7 @@ spec:
         mountPath: /app/config
         accessMode: ReadWriteOnce
         size: 1Gi
-        # FIXME k8s-2 doesn't like longhorn
-        storageClass: local-path
+        storageClass: longhorn
     resources:
       requests:
         cpu: 10m
