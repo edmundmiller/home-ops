@@ -1,0 +1,23 @@
+#+title: MSI
+
+* Linux don't suspend on laptop close
+:PROPERTIES:
+:ID:       33620545-51e6-45eb-abe4-3266017526d0
+:ROAM_REFS: https://youtu.be/HxvFuGnjoJo?t=885
+:END:
+
+For using laptop as a server
+
+Uncomment and change lines to
+
+#+begin_src
+HandleSuspendKey=ignore
+HandleLidSwitch=ignore
+HandleLidSwitchDocked=ignore
+#+end_src
+
+and run
+
+#+begin_src bash
+sudo systemctl restart systemd-logind
+#+end_src
