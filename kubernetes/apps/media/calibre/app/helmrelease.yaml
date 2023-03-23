@@ -33,6 +33,7 @@ spec:
       TZ: ${TIMEZONE}
       PUID: 568
       PGID: 568
+      CLI_ARGS: " --with-library /media/ebooks"
     service:
       main:
         ports:
