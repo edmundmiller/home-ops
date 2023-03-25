@@ -135,6 +135,8 @@ spec:
                 0 => 'HTTP_X_FORWARDED_FOR',
               ),
           );
+    mariadb:
+      enabled: true
     persistence:
       enabled: true
       accessMode: ReadWriteOnce
