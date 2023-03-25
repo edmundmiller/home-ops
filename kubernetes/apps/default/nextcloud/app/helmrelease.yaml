@@ -85,16 +85,16 @@ spec:
 
     nextcloud:
       host: nextcloud.${SECRET_DOMAIN}
-      username:
-        valueFrom:
-          secretKeyRef:
-            name: nextcloud-secret
-            key: username
-      password:
-        valueFrom:
-          secretKeyRef:
-            name: nextcloud-secret
-            key: password
+      # username:
+      #   valueFrom:
+      #     secretKeyRef:
+      #       name: nextcloud-secret
+      #       key: username
+      # password:
+      #   valueFrom:
+      #     secretKeyRef:
+      #       name: nextcloud-secret
+      #       key: password
       # TODO
       # mail:
       #   enabled: false
