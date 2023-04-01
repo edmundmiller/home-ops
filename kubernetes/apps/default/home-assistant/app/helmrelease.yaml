@@ -91,7 +91,7 @@ spec:
         mountPath: /config
         accessMode: ReadWriteOnce
         size: 5Gi
-        storageClass: longhorn
+        storageClass: ceph-block
     resources:
       requests:
         cpu: 10m

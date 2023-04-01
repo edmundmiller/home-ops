@@ -8,7 +8,7 @@ metadata:
 spec:
   dependsOn:
     - name: cluster-apps-mosquitto
-    - name: cluster-apps-longhorn
+    - name: cluster-apps-rook-ceph-cluster
   path: ./kubernetes/apps/default/zigbee2mqtt/app
   prune: true
   sourceRef:

@@ -74,7 +74,7 @@ spec:
         mountPath: /config
         accessMode: ReadWriteOnce
         size: 2Gi
-        storageClass: longhorn
+        storageClass: ceph-block
     persistence:
       backup:
         enabled: true
