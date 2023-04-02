@@ -6,13 +6,13 @@ metadata:
 type: Opaque
 stringData:
   # The repository url
-  RESTIC_REPOSITORY: "${RESTIC_REPOSITORY}/jellyfin"
+  RESTIC_REPOSITORY: "${SECRET_RESTIC_REPOSITORY}/jellyfin"
   # The repository encryption key
-  RESTIC_PASSWORD: "${RESTIC_PASSWORD}"
+  RESTIC_PASSWORD: "${SECRET_RESTIC_PASSWORD}"
   # ENV vars specific to the back end
   # https://restic.readthedocs.io/en/stable/030_preparing_a_new_repo.html
-  B2_ACCOUNT_ID: "${B2_ACCOUNT_ID}"
-  B2_ACCOUNT_KEY: "${B2_ACCOUNT_KEY}"
+  B2_ACCOUNT_ID: "${SECRET_B2_ACCOUNT_ID}"
+  B2_ACCOUNT_KEY: "${SECRET_B2_ACCOUNT_KEY}"
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/replicationsource_v1alpha1.json
 apiVersion: volsync.backube/v1alpha1
