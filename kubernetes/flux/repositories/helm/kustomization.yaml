@@ -18,6 +18,7 @@ resources:
   - ./metrics-server.yaml
   - ./node-feature-discovery.yaml
   - ./nvidia.yaml
+  - ./piraeus.yaml
   - ./rook-ceph.yaml
   - ./stakater.yaml
   - ./weave-gitops.yaml
