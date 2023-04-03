@@ -40,6 +40,12 @@ spec:
       namespaceSelector:
         matchNames:
           - default
+          - downloads
+          - flux-system
+          - media
+          - monitoring
+          - networking
+          - rook-ceph
     ingress:
       main:
         enabled: true
