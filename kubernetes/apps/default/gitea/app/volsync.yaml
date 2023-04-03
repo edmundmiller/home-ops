@@ -2,11 +2,11 @@
 apiVersion: v1
 kind: Secret
 metadata:
-  name: jellyfin-restic-secret
+  name: gitea-restic-secret
 type: Opaque
 stringData:
   # The repository url
-  RESTIC_REPOSITORY: "${SECRET_RESTIC_REPOSITORY}/jellyfin"
+  RESTIC_REPOSITORY: "${SECRET_RESTIC_REPOSITORY}/gitea"
   # The repository encryption key
   RESTIC_PASSWORD: "${SECRET_RESTIC_PASSWORD}"
   # ENV vars specific to the back end
@@ -18,16 +18,16 @@ stringData:
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
 metadata:
-  name: jellyfin
-  namespace: media
+  name: gitea
+  namespace: default
 spec:
-  sourcePVC: config-jellyfin-0
+  sourcePVC: config-gitea-0
   trigger:
     schedule: "0 0 * * *"
   restic:
     copyMethod: Snapshot
     pruneIntervalDays: 10
-    repository: jellyfin-restic-secret
+    repository: gitea-restic-secret
     cacheCapacity: 2Gi
     volumeSnapshotClassName: csi-ceph-blockpool
     storageClassName: ceph-block

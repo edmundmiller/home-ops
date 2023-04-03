@@ -6,6 +6,7 @@ namespace: default
 resources:
   - ./helmrelease.yaml
   # - ./prometheusrule.yaml
+  - ./volsync.yaml
 labels:
   - pairs:
       app.kubernetes.io/name: zigbee2mqtt
