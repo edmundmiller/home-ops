@@ -26,6 +26,8 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    env:
+      TZ: "${TIMEZONE}"
     hajimari:
       title: Apps
       darkTheme: espresso
