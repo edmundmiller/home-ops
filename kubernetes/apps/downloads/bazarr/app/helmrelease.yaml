@@ -73,7 +73,7 @@ spec:
         type: nfs
         server: '${NAS_ADDR}'
         path: /srv/nfs/backup/app/bazarr
-        mountPath: /config/Backups
+        mountPath: /config/backup
         readOnly: false
       media:
         enabled: true
