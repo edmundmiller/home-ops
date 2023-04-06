@@ -74,9 +74,3 @@ tasks:
     dir: "{{.ANSIBLE_DIR}}"
     cmds:
       - ansible kubernetes -i {{.ANSIBLE_INVENTORY_DIR}}/hosts.yml -a '/usr/bin/systemctl poweroff' --become
-
-  longhorn-prepare:
-    desc: Prepare nodes for longhorn
-    dir: "{{.ANSIBLE_DIR}}"
-    cmds:
-      - ansible-playbook -i {{.ANSIBLE_INVENTORY_DIR}}/hosts.yml {{.ANSIBLE_PLAYBOOK_DIR}}/longhorn-prepare.yml
