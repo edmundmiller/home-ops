@@ -14,6 +14,7 @@ fedora:
     - ipvsadm
     - lm_sensors
     - nano
+    - nfs-utils
     - nvme-cli
     - socat
     - python3-kubernetes
