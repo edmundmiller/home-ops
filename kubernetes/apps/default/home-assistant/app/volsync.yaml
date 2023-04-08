@@ -21,7 +21,7 @@ metadata:
   name: hass
   namespace: default
 spec:
-  sourcePVC: config-hass-0
+  sourcePVC: config-home-assistant-0
   trigger:
     schedule: "0 0 * * *"
   restic:
