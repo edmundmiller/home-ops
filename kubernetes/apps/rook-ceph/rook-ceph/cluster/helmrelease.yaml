@@ -63,20 +63,20 @@ spec:
         urlPrefix: /
         ssl: false
       storage:
-        useAllNodes: false
-        useAllDevices: false
-        config:
-          osdsPerDevice: "1"
-        nodes:
-          - name: k8s-0
-            devices:
-              - name: /dev/disk/by-id/nvme-PCIe_SSD_22012510000266
-          - name: k8s-1
-            devices:
-              - name: /dev/disk/by-id/nvme-PCIe_SSD_21050610241091
-          - name: k8s-2
-            devices:
-              - name: /dev/disk/by-id/nvme-Samsung_SSD_980_1TB_S64ANS0W114130F
+        useAllNodes: true
+        useAllDevices: true
+        # config:
+        #   osdsPerDevice: "1"
+        # nodes:
+        #   - name: k8s-0
+        #     devices:
+        #       - name: /dev/disk/by-id/nvme-PCIe_SSD_22012510000266
+        #   - name: k8s-1
+        #     devices:
+        #       - name: /dev/disk/by-id/nvme-PCIe_SSD_21050610241091
+        #   - name: k8s-2
+        #     devices:
+        #       - name: /dev/disk/by-id/nvme-Samsung_SSD_980_1TB_S64ANS0W114130F
     cephBlockPools:
       - name: ceph-blockpool
         spec:
