@@ -21,7 +21,7 @@ metadata:
   name: gitea
   namespace: default
 spec:
-  sourcePVC: config-gitea-0
+  sourcePVC: data-gitea-0
   trigger:
     schedule: "0 0 * * *"
   restic:
