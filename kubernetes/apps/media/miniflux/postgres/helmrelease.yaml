@@ -23,6 +23,8 @@ spec:
     remediation:
       retries: 3
   values:
+    controller:
+      replicas: 0
     image:
       repository: library/postgres
       tag: "15.2"

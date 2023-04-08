@@ -26,7 +26,8 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    replicaCount: 0
+    controller:
+      replicas: 0
     image:
       repository: ghcr.io/advplyr/audiobookshelf
       tag: 2.2.18
