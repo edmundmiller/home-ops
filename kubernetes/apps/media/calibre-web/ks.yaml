@@ -8,6 +8,7 @@ metadata:
 spec:
   dependsOn:
     - name: cluster-apps-rook-ceph-cluster
+    # TODO - name: cluster-apps-volsync
   path: ./kubernetes/apps/media/calibre-web/app
   prune: true
   sourceRef:
