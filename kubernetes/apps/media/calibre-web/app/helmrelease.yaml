@@ -1,13 +1,5 @@
-# https://github.com/janeczku/calibre-web
-# https://github.com/linuxserver/docker-calibre-web
-
-# Autoadd books to calibre-web requires separate functionality from Calibre
-# https://github.com/DobyTang/LazyLibrarian/issues/1052
-# https://github.com/janeczku/calibre-web/issues/344
-# https://github.com/janeczku/calibre-web/issues/412
-
-# Calibre web needs a calibre database `metadata.db` which you can get from a local calibre installation
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/helmrelease_v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -33,37 +25,18 @@ spec:
       retries: 5
   values:
     image:
-    # https://hub.docker.com/r/linuxserver/calibre-web
-      repository: lscr.io/linuxserver/calibre-web
-      tag: latest
-      pullPolicy: IfNotPresent
+      repository: ghcr.io/bjw-s/calibre-web
+      tag: 0.6.20@sha256:93766aed8f17d6006652fbcc3562d56d4b04de35e319283b22675f7653926504
     env:
       TZ: ${TIMEZONE}
       PUID: 568
       PGID: 568
-      DOCKER_MODS: linuxserver/calibre-web:calibre
+      CACHE_DIR: /cache
     service:
       main:
         ports:
           http:
             port: 8083
-    securityContext:
-      seccompProfile:
-        type: Unconfined
-    volumeClaimTemplates:
-      - name: config
-        mountPath: /config
-        accessMode: ReadWriteOnce
-        size: 5Gi
-        storageClass: ceph-block
-    persistence:
-      media:
-        enabled: true
-        type: nfs
-        server: '${NAS_ADDR}'
-        path: /srv/nfs/books/ebooks
-        mountPath: /media
-        readOnly: false
     ingress:
       main:
         enabled: true
@@ -79,3 +52,33 @@ spec:
         tls:
           - hosts:
               - *host
+    podSecurityContext:
+      runAsUser: 568
+      runAsGroup: 568
+      fsGroup: 568
+      fsGroupChangePolicy: "OnRootMismatch"
+      supplementalGroups: [65539]
+    volumeClaimTemplates:
+      - name: config
+        mountPath: /config
+        accessMode: ReadWriteOnce
+        size: 1Gi
+        storageClass: ceph-block
+    persistence:
+      media:
+        enabled: true
+        type: nfs
+        server: "${NAS_ADDR}"
+        path: /srv/nfs/books/ebooks
+        mountPath: /media
+        readOnly: false
+      cache:
+        enabled: true
+        type: emptyDir
+        mountPath: /cache
+    resources:
+      requests:
+        cpu: 15m
+        memory: 273M
+      limits:
+        memory: 328M
