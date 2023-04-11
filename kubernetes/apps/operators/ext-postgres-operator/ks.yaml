@@ -14,6 +14,5 @@ spec:
     kind: GitRepository
     name: home-kubernetes
   wait: true
-  # TODO
-  # dependsOn:
-  #   - name: cluster-apps-zalando-postgres-cluster
+  dependsOn:
+    - name: cluster-apps-cloudnative-pg-cluster
