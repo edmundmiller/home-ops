@@ -1,7 +1,5 @@
-# https://calibre-ebook.com
-# https://github.com/linuxserver/docker-calibre
-# https://manual.calibre-ebook.com/server.html
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/helmrelease_v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -26,14 +24,29 @@ spec:
     remediation:
       retries: 5
   values:
+    controller:
+      type: statefulset
+
     image:
       repository: ghcr.io/linuxserver/calibre
       tag: version-v6.14.0
+
+    enableServiceLinks: false
+
     env:
       TZ: ${TIMEZONE}
       PUID: 568
       PGID: 568
-      CLI_ARGS: " --with-library /media/ebooks"
+      CLI_ARGS: " --with-library /media/"
+      CACHE_DIR: /cache
+
+    podSecurityContext:
+      runAsUser: 568
+      runAsGroup: 568
+      fsGroup: 568
+      fsGroupChangePolicy: "OnRootMismatch"
+      supplementalGroups: [65539]
+
     service:
       main:
         ports:
@@ -45,23 +58,6 @@ spec:
           content-server:
             enabled: true
             port: 8081
-    securityContext:
-      seccompProfile:
-        type: Unconfined
-    volumeClaimTemplates:
-      - name: config
-        mountPath: /config
-        accessMode: ReadWriteOnce
-        size: 10Gi
-        storageClass: ceph-block
-    persistence:
-      media:
-        enabled: true
-        type: nfs
-        server: "${NAS_ADDR}"
-        path: /srv/nfs/books
-        mountPath: /media
-        readOnly: false
     ingress:
       main:
         enabled: true
@@ -95,6 +91,25 @@ spec:
         tls:
           - hosts:
               - *host2
+
+    volumeClaimTemplates:
+      - name: config
+        mountPath: /config
+        accessMode: ReadWriteOnce
+        size: 1Gi
+        storageClass: ceph-block
+    persistence:
+      media:
+        enabled: true
+        type: nfs
+        server: "${NAS_ADDR}"
+        path: /srv/nfs/books/ebooks
+        mountPath: /media
+        readOnly: false
+      cache:
+        enabled: true
+        type: emptyDir
+        mountPath: /cache
     resources:
       requests:
         cpu: 15m
