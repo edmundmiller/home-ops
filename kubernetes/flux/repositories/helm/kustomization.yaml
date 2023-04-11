@@ -5,6 +5,7 @@ resources:
   - ./backube.yaml
   - ./bitnami.yaml
   - ./bjw-s.yaml
+  - ./cloudnative-pg.yaml
   - ./ext-postgres-operator.yaml
   - ./external-dns.yaml
   - ./gitea.yaml
