@@ -42,6 +42,7 @@ spec:
       namespaceSelector:
         matchNames:
           - default
+          - dev
           - downloads
           - flux-system
           - media
