@@ -5,6 +5,7 @@ kind: Kustomization
 namespace: dev
 resources:
   - ./helmrelease.yaml
+  - ./secret.sops.yaml
   - ./volsync.yaml
 labels:
   - pairs:

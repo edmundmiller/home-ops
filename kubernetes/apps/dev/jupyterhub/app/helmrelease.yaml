@@ -30,8 +30,6 @@ spec:
     hub:
       config:
         GitHubOAuthenticator:
-          client_id: "${SECRET_JUPYTERHUB_CLIENT_ID}"
-          client_secret: "${SECRET_JUPYTERHUB_CLIENT_SECRET}"
           oauth_callback_url: "https://jupyter.${SECRET_DOMAIN}/hub/oauth_callback"
         JupyterHub:
           authenticator_class: github
@@ -67,3 +65,12 @@ spec:
       tls:
         - hosts:
             - *host
+  valuesFrom:
+    - kind: Secret
+      name: jupyterhub-secret
+      valuesKey: client_id
+      targetPath: hub.config.GitHubOAuthenticator.client_id
+    - kind: Secret
+      name: jupyterhub-secret
+      valuesKey: client_secret
+      targetPath: hub.config.GitHubOAuthenticator.client_secret
