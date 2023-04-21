@@ -21,7 +21,7 @@ metadata:
   name: jupyterhub
   namespace: dev
 spec:
-  sourcePVC: config-jupyterhub-0
+  sourcePVC: claim-emiller88
   trigger:
     schedule: "0 0 * * *"
   restic:
