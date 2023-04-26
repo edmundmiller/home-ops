@@ -12,7 +12,7 @@ spec:
   nfs:
     # FIXME
     server: "192.168.1.101"
-    path: /srv/nfs/media/docs/paperless
+    path: /srv/nfs/docs/paperless
   # Note: The first two options are strictly for NFSv4.2
   mountOptions: ["nfsvers=4.2", "nconnect=8", "hard", "noatime"]
 ---
