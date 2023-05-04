@@ -9,6 +9,9 @@ sonarr:
       type: series
     custom_formats:
       - trash_ids:
+          # [No Category]
+          - 290078c8b266272a5cc8e251b5e2eb0b # 1080p
+          - 1bef6c151fa35093015b0bfef18279e5 # 2160p
           # Streaming Services
           - d660701077794679fd59e8bdf4ce3a29 # AMZN
           - f67c9ca88f463a48346062e8ad07713f # ATVP
@@ -57,6 +60,7 @@ sonarr:
           - name: Any
           - name: HD
           - name: SD
+          - name: WEB 2160p
 
 radarr:
   standard:
@@ -74,6 +78,15 @@ radarr:
           - name: SD
             score: 1
       - trash_ids:
+          # [No Category]
+          - 820b09bb9acbfde9c35c71e0e565dad8 # 1080p
+          - fb392fb0d61a010ae38e49ceaa24a1ef # 2160p
+          - b2be17d608fc88818940cd1833b0b24c # 720p
+          - 5153ec7413d9dae44e24275589b5e944 # BHDStudio
+          - 0a3f082873eb454bde444150b70253cc # Extras
+          - ff5bc9e8ce91d46c997ca3ac6994d6f8 # FraMeSToR
+          - 8cd3ac70db7ac318cf9a0e01333940a4 # SiC
+
           - 496f355514737f7d83bf7aa4d24f8169 # TrueHD Atmos
           - 2f22d89048b01681dde8afe203bf2e95 # DTS X
           - 417804f7f2c4308c1f4c5d380d4c4475 # ATMOS (undefined)
