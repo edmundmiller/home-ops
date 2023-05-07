@@ -6,7 +6,6 @@ metadata:
   name: &app audiobookshelf
   namespace: media
 spec:
-  replicas: 0
   interval: 10m
   chart:
     spec:

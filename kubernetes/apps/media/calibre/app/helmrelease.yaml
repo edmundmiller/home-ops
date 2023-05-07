@@ -6,7 +6,6 @@ metadata:
   name: calibre
   namespace: media
 spec:
-  replicas: 0
   interval: 15m
   chart:
     spec:
