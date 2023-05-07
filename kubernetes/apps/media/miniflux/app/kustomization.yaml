@@ -5,7 +5,4 @@ kind: Kustomization
 namespace: media
 resources:
   - ./helmrelease.yaml
-labels:
-  - pairs:
-      app.kubernetes.io/name: miniflux
-      app.kubernetes.io/instance: miniflux
+  - ./secret.sops.yaml
