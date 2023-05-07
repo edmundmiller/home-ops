@@ -24,6 +24,8 @@ spec:
     remediation:
       retries: 5
   values:
+    replicaCount: 0
+
     controller:
       type: statefulset
 
