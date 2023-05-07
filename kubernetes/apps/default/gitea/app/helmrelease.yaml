@@ -5,6 +5,7 @@ metadata:
   name: gitea
   namespace: default
 spec:
+  replicas: 0
   interval: 15m
   chart:
     spec:
@@ -26,7 +27,6 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    replicaCount: 0
     controller:
       replicas: 0
       strategy: RollingUpdate

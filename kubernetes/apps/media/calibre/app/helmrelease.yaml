@@ -6,6 +6,7 @@ metadata:
   name: calibre
   namespace: media
 spec:
+  replicas: 0
   interval: 15m
   chart:
     spec:
@@ -24,7 +25,6 @@ spec:
     remediation:
       retries: 5
   values:
-    replicaCount: 0
 
     controller:
       type: statefulset

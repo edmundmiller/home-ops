@@ -6,6 +6,7 @@ metadata:
   name: &app audiobookshelf
   namespace: media
 spec:
+  replicas: 0
   interval: 10m
   chart:
     spec:
@@ -26,7 +27,6 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    replicaCount: 0
     controller:
       replicas: 0
     image:
