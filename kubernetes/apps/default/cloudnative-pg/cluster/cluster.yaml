@@ -32,7 +32,7 @@ spec:
         compression: bzip2
         maxParallel: 8
       destinationPath: s3://postgresql/
-      endpointURL: "http://s3.${SECRET_DOMAIN}"
+      endpointURL: "https://s3.${SECRET_DOMAIN}"
       serverName: postgres-v1
       s3Credentials:
         accessKeyId:
