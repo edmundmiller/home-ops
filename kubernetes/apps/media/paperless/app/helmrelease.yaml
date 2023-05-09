@@ -50,6 +50,7 @@ spec:
       PAPERLESS_EMAIL_TASK_CRON: "0 */2 * * *"
       PAPERLESS_ENABLE_HTTP_REMOTE_USER: "true"
       PAPERLESS_EXPORT_DIR: /library/export
+      PAPERLESS_FILENAME_FORMAT: "{created_year}/{correspondent}/{title}"
       PAPERLESS_HTTP_REMOTE_USER_HEADER_NAME: HTTP_REMOTE_USER
       PAPERLESS_MEDIA_ROOT: /library/media
       PAPERLESS_OCR_LANGUAGE: eng
