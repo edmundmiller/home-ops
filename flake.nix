@@ -19,6 +19,7 @@
           ipcalc
           # Dev tools
           age
+          doppler
           envsubst
           pre-commit
           go # gitleaksbs
