@@ -28,6 +28,13 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    extraInitContainers:
+      - name: 01-init-db
+        image: ghcr.io/onedr0p/postgres-init:14.8
+        imagePullPolicy: IfNotPresent
+        envFrom:
+          - secretRef:
+              name: grafana-secret
     rbac:
       pspEnabled: false
     env:
@@ -37,8 +44,10 @@ spec:
       GF_DATE_FORMATS_FULL_DATE: "DD.MM.YYYY hh:mm:ss"
       GF_SECURITY_ALLOW_EMBEDDING: true
       GF_SECURITY_COOKIE_SAMESITE: grafana
+    envFromSecrets:
+      - name: grafana-secret
     admin:
-      existingSecret: grafana-admin-creds
+      existingSecret: grafana-secret
     grafana.ini:
       server:
         root_url: "https://grafana.${SECRET_DOMAIN}"
