@@ -8,6 +8,7 @@ metadata:
 spec:
   dependsOn:
     - name: cluster-apps-cloudnative-pg
+    - name: cluster-apps-external-secrets-stores
     - name: cluster-apps-redis
     - name: cluster-apps-immich-redis
   path: ./kubernetes/apps/media/immich/app
