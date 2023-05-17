@@ -6,6 +6,7 @@ resources:
   - ./bitnami.yaml
   - ./bjw-s.yaml
   - ./cloudnative-pg.yaml
+  - ./docker-osx.yaml
   - ./external-dns.yaml
   - ./external-secrets.yaml
   - ./gitea.yaml
