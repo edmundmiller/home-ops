@@ -33,12 +33,12 @@ spec:
       - name: CF_API_EMAIL
         valueFrom:
           secretKeyRef:
-            name: external-dns-secret
+            name: external-dns-cloudflare-secret
             key: email
       - name: CF_API_KEY
         valueFrom:
           secretKeyRef:
-            name: external-dns-secret
+            name: external-dns-cloudflare-secret
             key: api-key
     extraArgs:
       - --cloudflare-proxied
