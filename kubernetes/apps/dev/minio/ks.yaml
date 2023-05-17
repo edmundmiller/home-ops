@@ -6,9 +6,8 @@ metadata:
   name: cluster-apps-minio
   namespace: flux-system
 spec:
-  # TODO
-  # dependsOn:
-  #   - name: cluster-apps-external-secrets-stores
+  dependsOn:
+    - name: cluster-apps-external-secrets-stores
   path: ./kubernetes/apps/dev/minio/app
   prune: true
   sourceRef:
