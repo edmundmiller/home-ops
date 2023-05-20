@@ -8,7 +8,7 @@ metadata:
 spec:
   dependsOn:
     - name: cluster-apps-rook-ceph-cluster
-    # TODO - name: cluster-apps-volsync
+    - name: cluster-apps-volsync
   path: ./kubernetes/apps/downloads/prowlarr/app
   prune: true
   sourceRef:

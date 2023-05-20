@@ -1,0 +1,49 @@
+# yaml-language-server: $schema=https://kubernetes-schemas.trux.dev/external-secrets.io/externalsecret_v1beta1.json
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: prowlarr-restic
+  namespace: downloads
+spec:
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: doppler-auth-api
+  target:
+    name: prowlarr-restic-secret
+    creationPolicy: Owner
+    template:
+      data:
+        RESTIC_REPOSITORY: "{{ .RESTIC_REPOSITORY_TEMPLATE }}/prowlarr"
+        RESTIC_PASSWORD: "{{ .RESTIC_PASSWORD }}"
+        B2_ACCOUNT_ID: "{{ .RESTIC_B2_ACCOUNT_ID }}"
+        B2_ACCOUNT_KEY: "{{ .RESTIC_B2_ACCOUNT_KEY }}"
+  dataFrom:
+    - find:
+        name:
+          regexp: "RESTIC_"
+
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/replicationsource_v1alpha1.json
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationSource
+metadata:
+  name: prowlarr
+  namespace: downloads
+spec:
+  sourcePVC: config-prowlarr-0
+  trigger:
+    schedule: "0 7 * * *"
+  restic:
+    copyMethod: Snapshot
+    pruneIntervalDays: 10
+    repository: prowlarr-restic-secret
+    cacheCapacity: 2Gi
+    volumeSnapshotClassName: csi-ceph-blockpool
+    storageClassName: ceph-block
+    moverSecurityContext:
+      runAsUser: 568
+      runAsGroup: 568
+      fsGroup: 568
+    retain:
+      daily: 10
+      within: 3d
