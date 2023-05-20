@@ -7,4 +7,4 @@ resources:
   - ./changedetection/ks.yaml
   - ./jupyterhub/ks.yaml
   - ./minio/ks.yaml
-  - ./osx/ks.yaml
+  # - ./osx/ks.yaml
