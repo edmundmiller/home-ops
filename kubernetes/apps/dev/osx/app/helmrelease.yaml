@@ -52,10 +52,6 @@ spec:
     #     - hosts:
     #         - *host
 
-    persistence:
-      data:
-        enabled: true
-        storageClass: ceph-block
     resources:
       requests:
         cpu: 2
