@@ -30,7 +30,7 @@ spec:
       replicas: 0
     image:
       repository: ghcr.io/advplyr/audiobookshelf
-      tag: 2.2.20
+      tag: 2.2.22
     env:
       TZ: "${TIMEZONE}"
       CONFIG_PATH: /config
