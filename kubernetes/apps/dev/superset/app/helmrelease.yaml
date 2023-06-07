@@ -1,0 +1,38 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/helmrelease_v2beta1.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: superset
+  namespace: dev
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: superset
+      version: 0.1.1
+      sourceRef:
+        kind: HelmRepository
+        name: superset
+        namespace: flux-system
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    ingress:
+      enabled: true
+      annotations:
+        external-dns.alpha.kubernetes.io/target: "ipv4.${SECRET_DOMAIN}"
+      hosts:
+        - &host "superset.${SECRET_DOMAIN}"
+      tls:
+        - hosts:
+            - *host

@@ -8,3 +8,4 @@ resources:
   - ./jupyterhub/ks.yaml
   - ./minio/ks.yaml
   # - ./osx/ks.yaml
+  - ./superset/ks.yaml
