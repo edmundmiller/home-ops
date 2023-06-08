@@ -27,6 +27,10 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    postgresql:
+      postgresqlPassword: superset
+    extraEnv:
+      DB_PASS: superset
     ingress:
       enabled: true
       annotations:
