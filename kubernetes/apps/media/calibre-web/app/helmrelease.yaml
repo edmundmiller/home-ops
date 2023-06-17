@@ -29,7 +29,7 @@ spec:
 
     image:
       repository: ghcr.io/bjw-s/calibre-web
-      tag: 0.6.20@sha256:64dee2680a00ef5d38cfdb14bb62786d92ad50393243f33e003ff00ba1e45e0f
+      tag: 0.6.20@sha256:3bd649d43496bc6161d5f4922ba350cb31cdd55652a40084046f0ebce6e49a95
 
     enableServiceLinks: false
 
