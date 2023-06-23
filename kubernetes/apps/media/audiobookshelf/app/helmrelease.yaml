@@ -31,6 +31,8 @@ spec:
       tag: 2.2.23
     env:
       TZ: "${TIMEZONE}"
+      AUDIOBOOKSHELF_UID: 568
+      AUDIOBOOKSHELF_GID: 568
       CONFIG_PATH: /config
       METADATA_PATH: /config/metadata
     service:
